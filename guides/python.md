@@ -32,7 +32,7 @@ The default setup for every Python project. When starting or touching a Python r
 
 - `release.yml` + `.github/scripts/release-check.sh` (copy from py-ev): on every push to `main`, if `v<version>` isn't tagged, build, tag and publish a GitHub Release with the distributions and generated notes; on PRs a dry run, failing if the PR changes the version to one already tagged.
 - **Feature PRs never change the version.** A release is its own PR that only bumps it (`task bump -- patch|minor|major`). Never tag by hand. Hotfixes fix forward (fix, then a patch-bump PR).
-- **Merging a version bump publishes a release: ask before merging it.**
+- **Merging a version bump publishes a release: ask before merging it.** (The PR workflow itself is in the Agentic development Guide.)
 - A tag created by `GITHUB_TOKEN` triggers no other workflows, so release work belongs in `release.yml` itself.
 
 ## GitHub repo settings and branch protection
@@ -55,13 +55,6 @@ When part of a project needs compiled speed, it becomes a Rust extension in the 
 - **Releases**: `release.yml` runs `uv build` on the platform that needs a wheel (e.g. `macos-15` for Apple silicon), giving the sdist plus that wheel; the dry run builds on every PR.
 - **The Python implementation stays the reference**: differential tests compare the Rust and Python results after every step on seeded inputs, and bit-identical randomness (port CPython's MT19937 and the `random` methods used) makes them exact.
 - **Traps**: pinning an exact toolchain makes rustup download it once even if `stable` is the same version. maturin builds a PyPy-specific wheel, which breaks a PyPy environment that relied on `--python-version` workarounds.
-
-## Workflow
-
-- Every change goes through a branch and a PR, never straight to `main`.
-- A PR whose checks all pass may be squash-merged without asking (`gh pr merge <n> --squash --delete-branch`, then `git switch main`, `git pull`), except version bumps (above). Wait for green with `gh pr checks <n> --watch`; never merge with failing or pending checks.
-- A PR that falls behind `main`: merge `main` into it, never rebase (`gh pr update-branch <n>`, or `git merge origin/main` when it conflicts), then wait for CI again. With squash merges the branch history never reaches `main`, so rebasing buys nothing; a merge resolves conflicts once, in one commit `git show` exposes, with no force-push. Resolve conflicts hunk by hunk, never by taking one side of a whole file, and before pushing check that `git diff origin/main --stat` lists only the PR's own changes: a deletion outside its scope means a resolution dropped someone else's merged work. When agents work in parallel, put this in each one's brief.
-- Repos using this flow need the per-project allowlist in `.claude/settings.local.json` (see the global CLAUDE.md).
 
 ## Known traps
 

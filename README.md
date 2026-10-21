@@ -16,7 +16,7 @@ Each project records its own Adoptions (Imports of Guides) in its `CLAUDE.md`.
 
 - `CONTEXT.md`: the vocabulary.
 - `MAP.md`: one line per Guide with its Scope. Imported into every session.
-- `guides/`: one Guide per Scope.
+- `guides/`: the Guides, each with a Scope; several may share one, split by topic.
 - `lessons/`: Lessons waiting for Promotion, and their format.
 - `skills/`: Skills (Procedures). *None yet.*
 
@@ -28,7 +28,7 @@ The whole repo is symlinked into `~/.claude/`, so Imports read `@~/.claude/commo
 ln -s ~/Projects/commons ~/.claude/commons
 ```
 
-The global `~/.claude/CLAUDE.md` (in dotfiles) Imports `MAP.md` and the Global Guide.
+The global `~/.claude/CLAUDE.md` (in dotfiles) Imports `MAP.md`, the Global Guide and the Agentic development Guide.
 
 ## Changing it
 

@@ -33,7 +33,7 @@ Scope has two independent dimensions, and they combine.
 - **Global**: every Stack and every Archetype.
 - **Local**: one Adopter only. Local knowledge stays in that Adopter's own docs, not in the Commons.
 
-Each Guide is pinned to a cell, a row or a column of the Stack × Archetype matrix. An Adopter's Guides are every Guide whose row or column covers its cell.
+Each Guide is pinned to a cell, a row or a column of the Stack × Archetype matrix. Several Guides may share a Scope, each on its own topic: the Global Guide and the Agentic development Guide are both any × any. A topic is not a third dimension; Scope still says only which Adopters a Guide applies to. An Adopter's Guides are every Guide whose row or column covers its cell.
 
 **Map**: one line per Guide giving its name and Scope (`MAP.md`). Always loaded, and tiny: it lets an agent address a Lesson and see when its cell has no Guide.
 
