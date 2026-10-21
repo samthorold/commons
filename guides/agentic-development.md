@@ -27,6 +27,7 @@
 
 ## Known traps
 
+- **GitHub closes `#N` wherever a closing keyword sits directly before it**: `close`, `closes`, `fix`, `fixes`, `resolve` or `resolves` (any case), anywhere in a PR body or commit message, even inside a quoted table cell or a sentence about another issue. Merging then closes that issue unintended. Write "#N closes" or "the row closing #N" unless you mean it, and check a PR body's references before merging.
 - **A delegated agent can outlive its hand-back.** A sub-agent can report done while work it started is still running: its own sub-agent, which goes on to commit, open a PR or overwrite a shared file, or background processes (long test or simulation runs). Before touching a branch after a delegated agent hands back: wait for every completion notification, check `gh pr list --head <branch>` and running processes, and confirm the branch head is stable. Give each delegated agent's files (e.g. a PR body written to a scratchpad) a unique name, and don't let delegated agents spawn agents of their own. Running agents in parallel makes this more likely, not less.
 
 - `gh pr merge --delete-branch` run from a git worktree prints `fatal: 'main' is already used by worktree` after merging, because it can't switch that worktree to `main`. The merge itself succeeded; check with `gh pr view <n> --json state` rather than retrying.
