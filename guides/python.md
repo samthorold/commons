@@ -67,7 +67,6 @@ When part of a project needs compiled speed, it becomes a Rust extension in the 
 
 - `actionlint-py` ships only an sdist that downloads the binary on build. On macOS with python.org Python that fails with `CERTIFICATE_VERIFY_FAILED` until `Install Certificates.command` has run; one-off workaround `SSL_CERT_FILE=/etc/ssl/cert.pem uv sync`.
 - pre-commit only sees tracked files: stage a new file before expecting a hook (e.g. shellcheck) to check it.
-- `gh pr merge --delete-branch` run from a git worktree prints `fatal: 'main' is already used by worktree` after merging, because it can't switch that worktree to `main`. The merge itself succeeded; check with `gh pr view <n> --json state`.
 
 ## Lessons
 
