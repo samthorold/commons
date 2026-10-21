@@ -1,0 +1,35 @@
+# commons
+
+The shared approach behind my projects: Guides (Conventions and Stances per Stack and Archetype), Skills (Procedures), and Lessons waiting to be promoted. The vocabulary is in [`CONTEXT.md`](CONTEXT.md); the list of Guides is in [`MAP.md`](MAP.md).
+
+## How the repos fit together
+
+| Repo | Visibility | Job |
+|---|---|---|
+| [dotfiles](https://github.com/samthorold/dotfiles) | public | Machine and Claude Code configuration, and the wiring that links this repo into `~/.claude/`. |
+| **commons** (this repo) | public | Approach: vocabulary, Map, Guides, Skills, Lessons. No list of projects. |
+| portfolio | private | The projects themselves: Groups and Direction. |
+
+Each project records its own Adoptions (Imports of Guides) in its `CLAUDE.md`.
+
+## Layout
+
+- `CONTEXT.md`: the vocabulary.
+- `MAP.md`: one line per Guide with its Scope. Imported into every session.
+- `guides/`: one Guide per Scope.
+- `lessons/`: Lessons waiting for Promotion, and their format.
+- `skills/`: Skills (Procedures). *None yet.*
+
+## Wiring
+
+The whole repo is symlinked into `~/.claude/`, so Imports read `@~/.claude/commons/...`:
+
+```sh
+ln -s ~/Projects/commons ~/.claude/commons
+```
+
+The global `~/.claude/CLAUDE.md` (in dotfiles) Imports `MAP.md` and the Global Guide.
+
+## Changing it
+
+Commit straight to `main`, no PR, as in dotfiles. A Revision's reason goes in the commit message. Keep it free of secrets and private details: the repo is public.
