@@ -137,7 +137,12 @@ call yourself and state it, with your reasoning, in the PR body.
    EOF
    )"
 
-5. Report back: what you implemented, the PR number, and any problems.
+5. Don't spawn agents of your own, and don't leave anything running in
+   the background: report back only once all your work has stopped. If
+   you write the PR body to a file, name it after the issue
+   (e.g. `pr-body-[NUMBER].md`), since other agents are working too.
+
+6. Report back: what you implemented, the PR number, and any problems.
    Also report anything that looked like a Lesson for the Commons (see
    ~/.claude/commons/CONTEXT.md, "Recognising a Lesson"): a Guide that
    was wrong or not enough, a Deviation you recorded, a decision no
@@ -161,6 +166,8 @@ git pull
 ```
 
 Run each as its own call, from the primary checkout. Never merge with failing or pending checks.
+
+**Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported.
 
 After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as the Guide says, then merge once it's green.
 
