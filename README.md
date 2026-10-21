@@ -18,7 +18,7 @@ Each project records its own Adoptions (Imports of Guides) in its `CLAUDE.md`.
 - `MAP.md`: one line per Guide with its Scope. Imported into every session.
 - `guides/`: the Guides, each with a Scope; several may share one, split by topic.
 - `lessons/`: Lessons waiting for Promotion, and their format.
-- `skills/`: Skills (Procedures). *None yet.*
+- `skills/`: Skills (Procedures), each a `SKILL.md` directory. Skills apply Guides rather than restating them.
 
 ## Wiring
 
@@ -26,6 +26,12 @@ The whole repo is symlinked into `~/.claude/`, so Imports read `@~/.claude/commo
 
 ```sh
 ln -s ~/Projects/commons ~/.claude/commons
+```
+
+Each Skill is symlinked into `~/.claude/skills/` on its own (other skills there come from elsewhere):
+
+```sh
+ln -s ~/.claude/commons/skills/grind-issues ~/.claude/skills/grind-issues
 ```
 
 The global `~/.claude/CLAUDE.md` (in dotfiles) Imports `MAP.md`, the Global Guide and the Agentic development Guide.
