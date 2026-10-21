@@ -22,19 +22,7 @@ Each project records its own Adoptions (Imports of Guides) in its `CLAUDE.md`.
 
 ## Wiring
 
-The whole repo is symlinked into `~/.claude/`, so Imports read `@~/.claude/commons/...`:
-
-```sh
-ln -s ~/Projects/commons ~/.claude/commons
-```
-
-Each Skill is symlinked into `~/.claude/skills/` on its own (other skills there come from elsewhere):
-
-```sh
-ln -s ~/.claude/commons/skills/grind-issues ~/.claude/skills/grind-issues
-```
-
-The global `~/.claude/CLAUDE.md` (in dotfiles) Imports `MAP.md`, the Global Guide and the Agentic development Guide.
+How this repo and its Skills are linked into `~/.claude/` is machine setup, so it lives in the [dotfiles README](https://github.com/samthorold/dotfiles#claude-code). Imports read `@~/.claude/commons/...`; the global `~/.claude/CLAUDE.md` Imports `MAP.md`, the Global Guide and the Agentic development Guide.
 
 ## Changing it
 
