@@ -60,7 +60,7 @@ When part of a project needs compiled speed, it becomes a Rust extension in the 
 
 - Every change goes through a branch and a PR, never straight to `main`.
 - A PR whose checks all pass may be squash-merged without asking (`gh pr merge <n> --squash --delete-branch`, then `git switch main`, `git pull`), except version bumps (above). Wait for green with `gh pr checks <n> --watch`; never merge with failing or pending checks.
-- A PR that falls behind `main`: `gh pr update-branch <n>`, then wait for CI again.
+- A PR that falls behind `main`: merge `main` into it, never rebase (`gh pr update-branch <n>`, or `git merge origin/main` when it conflicts), then wait for CI again. With squash merges the branch history never reaches `main`, so rebasing buys nothing; a merge resolves conflicts once, in one commit `git show` exposes, with no force-push. Resolve conflicts hunk by hunk, never by taking one side of a whole file, and before pushing check that `git diff origin/main --stat` lists only the PR's own changes: a deletion outside its scope means a resolution dropped someone else's merged work. When agents work in parallel, put this in each one's brief.
 - Repos using this flow need the per-project allowlist in `.claude/settings.local.json` (see the global CLAUDE.md).
 
 ## Known traps
