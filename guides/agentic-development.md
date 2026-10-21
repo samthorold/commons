@@ -2,6 +2,13 @@
 
 **Scope:** every Stack, every Archetype. The topic is how agents change a repo: branches, PRs, merging, and agents working in parallel.
 
+## Stance: agents implement test-first
+
+- **Stance:** an agent implements a change through test-driven development, in vertical slices: one failing test, the code to pass it, refactor, repeat (the `/tdd` Skill). Never all the tests first, never the code first.
+- **Why:** an agent working unattended needs an objective signal of done that it didn't shape to fit its own code. A test written before the code pins down the intended behaviour while the agent still only knows the intent; tests written after tend to describe whatever got built, bugs included. Small red-green steps also keep each change small enough to diagnose when it goes wrong, and leave a suite that lets the next agent change the code safely.
+- **How to apply:** for every feature or bug fix, whether in a Skill-driven run (e.g. `grind-issues`) or not. A bug fix starts with a test that reproduces it. Where the Archetype makes exact assertions hard (stochastic simulations, search), test properties, invariants or seeded runs rather than skipping the test.
+- **What would change our mind:** work where a failing test can't express the intent before the code exists, such as throwaway prototypes (the `prototype` Skill) and exploratory spikes whose output is a finding, not code to keep. Those are exempt as long as their code isn't merged as-is. If a kind of change keeps needing that exemption, record a Lesson.
+
 ## The PR workflow
 
 - Every change goes through a branch and a PR, never straight to `main`.

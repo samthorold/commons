@@ -184,7 +184,7 @@ When all issues have been processed, report a summary:
 - **Parallel where independent, sequential where dependent.** Sequence only on design dependence, not on shared files. Merges are always one at a time.
 - **One worktree per sub-agent.** Never let two agents share a checkout.
 - **Always delegate implementation.** The orchestrator assesses, plans and merges. The sub-agents implement.
-- **Implementation goes through `/tdd`, always.** The sub-agent invokes it with the Skill tool. Parallelism is a judgement call; TDD is not.
+- **Implementation goes through `/tdd`, always.** The sub-agent invokes it with the Skill tool. This is the Agentic development Guide's test-first Stance; parallelism is a judgement call, TDD is not.
 - **Squash-merge only, on green.** Keep main's history clean.
 - **Check before implementing.** If the issue looks already resolved, verify before closing.
 - **Respect the domain.** Use vocabulary from CONTEXT.md and honor the documented system design.
