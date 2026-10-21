@@ -20,8 +20,8 @@ Nothing loads this directory by default, and agents shouldn't rely on it while w
 
 ## When Promotion happens
 
-- **On touch**: before writing or revising a Guide or Skill, read every Lesson whose `address` is it (`grep -l "address: guides/<guide>" lessons/*.md`), and resolve them in the same piece of work. Also search the Adopters' own docs for Local knowledge about it that was never recorded as a Lesson, e.g. known traps mentioning the Skill (`grep -rli "<name>" ~/Projects/*/CLAUDE.md ~/Projects/*/docs`), and promote what passes the filter.
-- **Sweep**: a recurring review of the whole inbox, tracked as an issue in the private portfolio repo. Several Lessons with the same Address are the strongest case for acting.
+- **On touch**: before writing or revising a Guide or Skill, read every Lesson whose `address` is it (`grep -l "address: guides/<guide>" lessons/*.md`), and resolve them in the same piece of work. Also search the Adopters' own docs for Local knowledge about it that was never recorded as a Lesson, e.g. known traps mentioning the Skill (`grep -rli "<name>" ~/Projects/*/CLAUDE.md ~/Projects/*/docs`), and promote what passes the filter. Once the general part is in the Commons, the Adopter's own copy can be cut down to what's specific to it (in that Adopter's own workflow, e.g. its next PR touching those docs).
+- **Sweep**: a recurring review of the whole inbox, tracked as an issue in the private portfolio repo. Several Lessons with the same Address are the strongest case for acting. The sweep also reviews every Known trap (in the Guides and the dotfiles `CLAUDE.md`): is its *remove when* met, and can it move up the ladder in `CONTEXT.md`?
 
 ## Promotion
 

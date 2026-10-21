@@ -54,12 +54,12 @@ When part of a project needs compiled speed, it becomes a Rust extension in the 
 - **CI** stays one `pre-commit` job: `rustup toolchain install` and `Swatinem/rust-cache` (exact version, `workspaces: rust`) before `uv sync --locked`. The `push` to `main` paths also include `rust/Cargo.lock` and `rust-toolchain.toml`, to keep the cargo cache warm.
 - **Releases**: `release.yml` runs `uv build` on the platform that needs a wheel (e.g. `macos-15` for Apple silicon), giving the sdist plus that wheel; the dry run builds on every PR.
 - **The Python implementation stays the reference**: differential tests compare the Rust and Python results after every step on seeded inputs, and bit-identical randomness (port CPython's MT19937 and the `random` methods used) makes them exact.
-- **Traps**: pinning an exact toolchain makes rustup download it once even if `stable` is the same version. maturin builds a PyPy-specific wheel, which breaks a PyPy environment that relied on `--python-version` workarounds.
+- **Traps**: pinning an exact toolchain makes rustup download it once even if `stable` is the same version (*remove when:* rustup reuses a matching `stable`; it's a one-off cost, so drop it if nobody is surprised again). maturin builds a PyPy-specific wheel, which breaks a PyPy environment that relied on `--python-version` workarounds (*remove when:* no Adopter runs PyPy).
 
 ## Known traps
 
-- `actionlint-py` ships only an sdist that downloads the binary on build. On macOS with python.org Python that fails with `CERTIFICATE_VERIFY_FAILED` until `Install Certificates.command` has run; one-off workaround `SSL_CERT_FILE=/etc/ssl/cert.pem uv sync`.
-- pre-commit only sees tracked files: stage a new file before expecting a hook (e.g. shellcheck) to check it.
+- `actionlint-py` ships only an sdist that downloads the binary on build. On macOS with python.org Python that fails with `CERTIFICATE_VERIFY_FAILED` until `Install Certificates.command` has run; one-off workaround `SSL_CERT_FILE=/etc/ssl/cert.pem uv sync`. *Remove when:* actionlint-py ships wheels, or the Guide drops it for another way to get actionlint.
+- pre-commit only sees tracked files: stage a new file before expecting a hook (e.g. shellcheck) to check it. *Remove when:* pre-commit checks untracked files (by design it doesn't, so probably never).
 
 ## Lessons
 

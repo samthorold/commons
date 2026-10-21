@@ -169,6 +169,8 @@ Run each as its own call, from the primary checkout. Never merge with failing or
 
 **Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported. This wait is per PR: meanwhile, carry on assessing, launching and merging other issues.
 
+**Check the PR's closing references** before merging (see the Guide's trap on closing keywords): `gh pr view <PR-NUMBER> --json closingIssuesReferences --jq '[.closingIssuesReferences[].number]'` should list only the issue being worked. If it lists others, edit the PR body (`gh pr edit <PR-NUMBER> --body-file <file>`) to reword them before merging.
+
 After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as the Guide says, then merge once it's green.
 
 Record the outcome: issue number, PR number, status. Once an issue is merged, start any issue that was waiting on it.

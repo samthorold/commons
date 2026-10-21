@@ -15,12 +15,22 @@ The Commons holds approach only. Which projects exist, how they group and where 
 |---|---|---|
 | **Convention** | A checkable rule whose reason is short or obvious. | A rule in a Guide. |
 | **Stance** | A design position that needs judgement to apply. | An entry in a Guide, always shaped: stance / why / how to apply / what would change our mind. |
+| **Known trap** | A warning about something that behaves surprisingly and can't (yet) be designed away. | An entry in a Guide's *Known traps*: the trap, what to do instead, and *remove when*. |
 | **Procedure** | How to carry out a kind of task. | A Skill (a `SKILL.md` directory). One Procedure, one Skill. |
 | **Lesson** | Something learned in one Adopter that may hold more widely, not yet settled. | A Lesson file in `lessons/` (see `lessons/README.md`). |
 
 **Guide**: a document holding the Conventions and Stances for one Scope. It always states current truth; history lives in git. Write each Stance so that breaking it is recognisable: its one-line *why* is what lets an agent notice a situation where the reason no longer holds.
 
 **Skill**: the artefact for a Procedure. A Skill that depends on a Stance links to its Guide rather than restating it. "Skill" names the artefact only, never the knowledge.
+
+**Known traps are the weakest fix.** An Imported trap costs context in every session, so a trap should move up this ladder whenever it can, and leave the Guide when it reaches the top:
+
+1. **Eliminate**: fix the cause (the tooling, the upstream bug), so the trap can't happen.
+2. **Automate**: a hook, a CI check, or a step in a Skill catches it.
+3. **State it positively**: a Convention or Stance says what to do.
+4. **Known trap**: "watch out for X", for what can't be designed away, usually something external behaving oddly.
+
+Every Known trap ends with **remove when**: the condition under which it stops being true or stops being needed (e.g. an upstream fix ships, or a Skill step makes it redundant). It is to a trap what *what would change our mind* is to a Stance. Removing a trap, or moving it up the ladder, is a Revision.
 
 A Stance can point to a choice on another axis (e.g. "discrete event simulation → Rust"). It is still just a Stance; if agents wouldn't reach for that choice unprompted, the Commons isn't clear enough yet.
 
@@ -63,7 +73,7 @@ Context comes in three layers: the **Map** (always), the Adopter's own Guides **
 |---|---|---|
 | **Propagation** | Commons → Adopters | A Guide changed; bring its Adopters back in line. Found through their Imports. |
 | **Promotion** | Adopter → Commons | A Lesson becomes a Convention or Stance in a Guide (or a new Guide). |
-| **Revision** | Within the Commons | A Stance or Convention changes; the reason goes in the commit message. |
+| **Revision** | Within the Commons | A Stance, Convention or Known trap changes (or goes); the reason goes in the commit message. |
 
 The two links: a **Lesson → its Address → a Guide** (upward), and a **Guide Revision → Imports → Adopters** (downward).
 
@@ -74,7 +84,7 @@ Four **Signals**, each needing only the context an agent already has:
 - **Contradiction**: following a Convention or Stance was wrong or not enough here.
 - **Deviation**: a Deviation was recorded. Always a candidate.
 - **Gap**: a decision the Adopter's own Guides didn't cover, which another Adopter would face too. (Whether some *other* Guide covers it is for the Promoter to check.)
-- **Trap**: something cost time, and the cause isn't specific to this Adopter.
+- **Trap**: something cost time, and the cause isn't specific to this Adopter. (Once promoted it becomes a Known trap, or better, something higher up the ladder.)
 
 The filter: *would this hold for another Adopter in the same cell, row or column?* If not, it's Local. The **Address** is the narrowest Guide whose Scope explains why the Lesson is true; if nothing fits, the Gap may be a missing Guide.
 
