@@ -167,7 +167,7 @@ git pull
 
 Run each as its own call, from the primary checkout. Never merge with failing or pending checks.
 
-**Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported.
+**Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported. This wait is per PR: meanwhile, carry on assessing, launching and merging other issues.
 
 After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as the Guide says, then merge once it's green.
 
