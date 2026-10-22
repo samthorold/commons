@@ -103,9 +103,8 @@ only this issue's changes.
 ## Your task
 
 Implement this issue using strict TDD by invoking the `/tdd` skill.
-You are running unattended, with no user to answer questions: where
-`/tdd` says to confirm with the user or get their approval, make the
-call yourself and state it, with your reasoning, in the PR body.
+You are running unattended, with no user to answer questions: apply
+the Guide's Stance "decide, record, carry on".
 
 1. Read the codebase. Use the project's CONTEXT.md for domain
    vocabulary and docs/system-design/ for the design and the reasons

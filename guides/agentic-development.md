@@ -9,6 +9,13 @@
 - **How to apply:** for every feature or bug fix, whether in a Skill-driven run (e.g. `grind-issues`) or not. A bug fix starts with a test that reproduces it. Where the Archetype makes exact assertions hard (stochastic simulations, search), test properties, invariants or seeded runs rather than skipping the test.
 - **What would change our mind:** work where a failing test can't express the intent before the code exists, such as throwaway prototypes (the `prototype` Skill) and exploratory spikes whose output is a finding, not code to keep. Those are exempt as long as their code isn't merged as-is. If a kind of change keeps needing that exemption, record a Lesson.
 
+## Stance: decide, record, carry on
+
+- **Stance:** an agent makes reversible calls itself and records each one where the next reader will look (the PR body, the issue, the commit message), rather than stopping to ask. At natural boundaries (a PR, half an epic) it reports a short status and carries on by default.
+- **Why:** the owner delegates heavily. A question that waits for an answer stalls the run, while a recorded call costs at worst one revert. Git and PR history is the one chronological record an Adopter keeps (its docs state only the present), so it is where a later agent looks for why a change was made; a call recorded there is found, a call made silently is not.
+- **How to apply:** wherever a Skill says to confirm with the user or get their approval, decide and record when nobody is answering. With the owner present, still give the recommendation, as the default the agent will act on unless corrected, not as a blocking question. Skills whose purpose is the interview (`grill-me`, `grill-with-docs`) are exempt. A call that shapes the design doesn't stay only in history: its *why* also goes into the system-design docs, in the present tense.
+- **What would change our mind:** recorded calls of one kind keep being reverted. That kind should stop and ask, and its boundary goes here. Which calls are not the agent's to make at all is still to be settled (the structure agent autonomy rests on).
+
 ## The PR workflow
 
 - Every change goes through a branch and a PR, never straight to `main`.
