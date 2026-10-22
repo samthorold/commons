@@ -4,7 +4,7 @@ description: Compact the current conversation into a handoff document for anothe
 argument-hint: "What will the next session be used for?"
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace - as `handoff-<slug>.md`, the slug naming the work (e.g. `handoff-commons-skills.md`). After `/clear`, a SessionStart hook ([hooks/handoff-list.py](hooks/handoff-list.py)) lists recent `handoff-*.md` files by name and age and has the fresh session offer the likely one before reading it, so the name is what the next session chooses by.
 
 The handoff is transient by design. Before writing it, make sure anything durable is already in a commit, a doc or an issue (the Project knowledge Guide's first Stance).
 
