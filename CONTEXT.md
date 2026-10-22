@@ -21,6 +21,8 @@ The Commons holds approach only. Which projects exist, how they group and where 
 
 **Guide**: a document holding the Conventions and Stances for one Scope. It always states current truth; history lives in git. Write each Stance so that breaking it is recognisable: its one-line *why* is what lets an agent notice a situation where the reason no longer holds.
 
+**One home per rule.** A Guide doesn't restate another Guide: where a rule spans Scopes, it lives in the broadest Guide it holds for, and a narrower Guide supplies only its own facts (e.g. the Stack Guide says which PR publishes a release; the Agentic development Guide says whether it may merge). A copy drifts from its original unseen.
+
 **Skill**: the artefact for a Procedure. A Skill that depends on a Stance links to its Guide rather than restating it. "Skill" names the artefact only, never the knowledge.
 
 **Known traps are the weakest fix.** An Imported trap costs context in every session, so a trap should move up this ladder whenever it can, and leave the Guide when it reaches the top:

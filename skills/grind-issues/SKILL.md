@@ -156,7 +156,7 @@ call yourself and state it, with your reasoning, in the PR body.
 
 ### Step 3 — Merge (orchestrator)
 
-Merge PRs **one at a time**, as their sub-agents finish. The grind-issues workflow pre-authorizes squash-merging every PR it creates once its checks pass, except a PR that publishes a release (the Guides say which those are): ask before merging that one.
+Merge PRs **one at a time**, as their sub-agents finish, under the Agentic development Guide's PR workflow (which says when a PR may merge without asking).
 
 ```bash
 gh pr checks <PR-NUMBER> --watch
