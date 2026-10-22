@@ -1,6 +1,6 @@
 ---
 name: grill-with-docs
-description: Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates documentation (CONTEXT.md, domain docs, system design) inline as decisions crystallise. Use when user wants to stress-test a plan against their project's language and documented decisions, or to design a `needs-design` issue until it is `ready`.
+description: Grilling session about a plan that belongs to a repo: challenges it against the repo's language, domain and system design (and its Archetype's Guide), and writes what's settled into CONTEXT.md and the design docs inline. Use when user wants to stress-test a project's plan or design, or to grill a `needs-design` issue until it is `ready`. For a plan with no repo docs to write into, use grill-me.
 ---
 
 <what-to-do>
