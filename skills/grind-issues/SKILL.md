@@ -142,11 +142,10 @@ the Guide's Stance "decide, record, carry on".
    (e.g. `pr-body-[NUMBER].md`), since other agents are working too.
 
 6. Report back: what you implemented, the PR number, and any problems.
-   Also report anything that looked like a Lesson for the Commons (see
-   ~/.claude/commons/CONTEXT.md, "Recognising a Lesson"): a Guide that
-   was wrong or not enough, a Deviation you recorded, a decision no
-   Guide covered, or a trap another project would hit. Say "none" if
-   nothing did.
+   Also report anything that looked like a Lesson (the four Signals in
+   ~/.claude/commons/CONTEXT.md, "Recognising a Lesson"); as a
+   sub-agent you report it, you don't record it (Global Guide,
+   *Lessons*). Say "none" if nothing did.
 ```
 
 **Sub-agent instructions:**

@@ -29,3 +29,6 @@
 ## Lessons
 
 If something in a Guide proves wrong or incomplete while you work, or you hit something another project in the same Stack or Archetype would also hit, record a Lesson as described in `~/.claude/commons/lessons/README.md`. The Signals and the filter are in `~/.claude/commons/CONTEXT.md`.
+
+- **A Lesson pass** (checking the four Signals) runs at the end of a grill and at the end of a `grind-issues` run: the checkpoints where the owner is present and thinking about design, or where several units of work come back together. Elsewhere, record a Lesson when one is obvious; a missed one recurs.
+- **A sub-agent reports what it found to whoever launched it, and doesn't record it.** The launching agent records, so parallel agents can't write duplicate Lessons.

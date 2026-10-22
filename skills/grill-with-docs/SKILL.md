@@ -13,6 +13,8 @@ If a question can be answered by exploring the codebase, explore the codebase in
 
 If the grill was about an issue ("grill #42"), end it by rewriting the issue's body as the slice contract and labelling it `ready` (the Global Guide's *Issues* Conventions), or, if it turned out to be several slices, by handing over to `/to-issues`.
 
+At the end of the session, run a Lesson pass (Global Guide, *Lessons*): did anything settled here contradict a Guide, depart from one, or fill a Gap that another project of the same Stack or Archetype would face?
+
 </what-to-do>
 
 <supporting-info>
