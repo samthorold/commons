@@ -22,7 +22,7 @@ Each project records its own Adoptions (Imports of Guides) in its `CLAUDE.md`.
 
 ## Wiring
 
-How this repo and its Skills are linked into `~/.claude/` is machine setup, so it lives in the [dotfiles README](https://github.com/samthorold/dotfiles#claude-code). Imports read `@~/.claude/commons/...`; the global `~/.claude/CLAUDE.md` Imports `MAP.md`, the Global Guide and the Agentic development Guide.
+How this repo and its Skills are linked into `~/.claude/` is machine setup, so it lives in the [dotfiles README](https://github.com/samthorold/dotfiles#claude-code). Imports read `@~/.claude/commons/...`; the global `~/.claude/CLAUDE.md` Imports `MAP.md`, the Global Guide, the Agentic development Guide and the Project knowledge Guide.
 
 ## Changing it
 

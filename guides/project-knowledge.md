@@ -1,0 +1,51 @@
+# Project knowledge Guide
+
+**Scope:** every Stack, every Archetype. The topic is where an Adopter keeps what it knows: its language, its domain, its design and its code, and what never gets written down separately.
+
+## Stance: durable knowledge goes in source control, not private memory
+
+- **Stance:** anything worth remembering across sessions (workflow, runtimes, known traps, vision, how to work on the project) goes in the repo's `CLAUDE.md` or the docs it points to, never only in an agent's auto-memory. Knowledge that would hold for other projects goes to the Commons as a Lesson, not only into the project's own docs.
+- **Why:** private memory isn't committed, reviewed or visible, and drifts out of date unseen.
+- **How to apply:** update the docs instead of writing a memory file. A handoff document (the `handoff` Skill) is transient by design: before writing one, make sure anything durable is already in a commit, a doc or an issue.
+- **What would change our mind:** a harness whose memory is versioned and reviewable like the repo.
+
+## Stance: three layers, written in one language
+
+- **Stance:** an Adopter's knowledge has three layers, each with one home:
+  - **Domain**: the real-world facts, rules and dynamics the system models, independent of any software. Home: `docs/<domain-area>/` (the project's own name, e.g. `docs/ecology/`).
+  - **System design**: our opinion about how to model the domain (which rules we carry forward or simplify, which mechanisms are load-bearing, the concepts, relationships and functional forms), implementation-agnostic. Home: `docs/system-design/` (or `docs/`).
+  - **Implementation**: the code. There is no documentation layer for it: if a fact lives in the code, the code is its home.
+
+  Underneath all three is the **ubiquitous language**, `CONTEXT.md` (or a `CONTEXT-MAP.md` pointing to one per context): what terms mean, with no design, implementation or decisions in it.
+- **Why:** each layer changes for a different reason (the world is understood better; the model changes; the code is refactored), so mixing them makes every change touch everything. A shared language keeps the layers, the issues, the tests and the conversation saying the same thing.
+- **How to apply:** work at one layer at a time, and write each fact once, at its layer, referencing the others rather than restating them. Create files lazily, only when there is something to write, and conform to the layout a repo already has. The `grill-with-docs` Skill is the Procedure that writes these layers; its `CONTEXT-FORMAT.md` and `SYSTEM-DESIGN-FORMAT.md` are the formats.
+- **What would change our mind:** a project with no domain beyond the software itself (a pure tool), where the domain layer stays empty; that's expected, not a Deviation.
+
+## Stance: there is no decision-record layer
+
+- **Stance:** no ADRs, decision logs or "we chose X over Y" files, and no decisions recorded in issues as the design's home. The *why* of the design lives in the system-design docs, in the present tense.
+- **Why:** a decision record is a chronology; to understand today's design from it, a reader reconstructs a trail of superseded choices, and records drift from the design they describe. The chronology already exists in git and PR history (see the Agentic development Guide's *decide, record, carry on*).
+- **How to apply:** wanting to write "we decided X over Y because Z" signals that the system-design doc under-explains the present: fold the reason, including why Y fails, into the doc. When the design changes, rewrite the doc to describe the new present.
+- **What would change our mind:** a decision that has to be audited as of a date (a regulatory or contractual record), which a present-tense doc can't serve.
+
+## Stance: system design justifies itself
+
+- **Stance:** a system-design doc states each load-bearing mechanism as it is today, why it has that shape (the domain fact or constraint that forces it), and why the obvious alternative fails, as a standing property of the design.
+- **Why:** a newcomer, human or agent, should understand from the doc alone both what the design is and why it must be so, without asking "why didn't they just…?". An agent that doesn't know why a shape is load-bearing will simplify it away.
+- **How to apply:** no chronology, no "considered options" log, no status or dates. A rejected feature request that is worth remembering goes here, as part of why the design has its shape (the issue is closed as *not planned*). Parameter values belong with the code, not here.
+- **What would change our mind:** design docs that grow so long agents stop reading them; then split by area, but keep the present tense.
+
+## Stance: domain claims come from sources, not recall
+
+- **Stance:** every claim in the domain layer is grounded in sources first, cited, with a note of evidence quality: what was read in full, what only from abstracts, what was recalled rather than read, and what the sources leave open. Only then is it carried into the design.
+- **Why:** an agent's own reading of how the world works is fluent and often wrong, and a design built on it inherits the error with no trail back to check.
+- **How to apply:** don't offer "my read" of the domain as a reason for a design choice. Where the literature is silent, say so, and settle the gap by a reading set in advance across the range the domain allows.
+- **What would change our mind:** a domain the project defines itself (a game's rules), where the rules are the source.
+
+## Research working folders are temporary
+
+Research outputs (deep-research `research_notes/` and `reports/`, scratch runs) are never committed. When the research is finished, fold what is durable into its layer (domain findings into the domain docs, measurements and project-specific analysis into `docs/research/<issue>-<slug>.md`, design into system design through a grill), then delete the working folders.
+
+## Lessons
+
+If something in this Guide proves wrong or incomplete while you work, record a Lesson addressed to it, as described in `~/.claude/commons/lessons/README.md`.

@@ -6,6 +6,7 @@ One line per Guide: its Scope (Stack × Archetype). Your Guides are those whose 
 |---|---|---|
 | [Global](guides/global.md) | any | any |
 | [Agentic development](guides/agentic-development.md) | any | any |
+| [Project knowledge](guides/project-knowledge.md) | any | any |
 | [Python](guides/python.md) | Python, and Python+Rust (*Rust extensions*) | any |
 
 **Known Gaps** (no Guide yet): Rust, discrete event simulation. Lessons in these areas still go to `lessons/`, addressed to the missing Guide.

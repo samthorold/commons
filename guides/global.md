@@ -2,11 +2,6 @@
 
 **Scope:** every Stack, every Archetype.
 
-## Durable knowledge goes in source control, not private memory
-
-- **Don't keep project knowledge in auto-memory.** Anything worth remembering across sessions (workflow, runtimes, known traps, vision, how to work on the project) goes in the repo's `CLAUDE.md` or the docs it points to, so it is committed, reviewed and visible. Update those docs instead of writing a memory file.
-- **Knowledge that would hold for other projects goes to the Commons**, as a Lesson (see below), not only into the project's own docs.
-
 ## GitHub repo settings and branch protection
 
 - Merge settings: squash merge only (no merge commits, no rebase), delete branch on merge.

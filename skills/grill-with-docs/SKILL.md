@@ -19,43 +19,9 @@ At the end of the session, run a Lesson pass (Global Guide, *Lessons*): did anyt
 
 <supporting-info>
 
-## The three layers
+## The layers
 
-Every meaningful project has three layers of knowledge. Two are documentation; the third is the code. Each has a different purpose and a different home. During a session, identify which layer the conversation is at and work there — don't skip layers or mix them.
-
-### 1. Domain — the true underlying facts, rules, and dynamics
-
-The real-world problem the system models, independent of any software. How double-entry bookkeeping works, how shipping logistics route freight, how a sport's scoring rules work. The ground truth the system design must faithfully represent. (These are illustrations — reason in whatever domain *this* project is about.)
-
-This is not "our system's accounting module" — it's "how accounting works" as the team understands it. Written in domain language, not implementation language.
-
-Home: `docs/{domain-area}/` (the project's own name for it — e.g. `docs/accounting/`, `docs/logistics/`).
-
-### 2. System design — the approach any implementation must encode
-
-Our opinion about how to model the domain: which of its rules we carry forward, which we simplify, which mechanisms are load-bearing, and what shape the system has — its concepts, relationships, constraints, and the functional forms that realise them. Implementation-agnostic: it describes the shape of the system without prescribing data structures, algorithms, or specific technologies.
-
-This is the bridge between domain knowledge and code, and it is where **design rationale lives**. A system-design doc explains not just *what* the design is but *why* it is that way — including why tempting alternatives don't work — as a standing property of today's design (see "Self-justifying system design" below).
-
-Home: `docs/` or `docs/system-design/`.
-
-### 3. Implementation — the code
-
-The code is the encoding of the system design. There is no separate documentation layer for it: if a fact lives in the code, the code is its home. The implementation should trace its shape back to the system design, not restate it.
-
-### The ubiquitous language underpins all three → `CONTEXT.md`
-
-The glossary is not a fourth layer — it's the precise shared vocabulary the three layers are written in. What terms mean in this project, with no implementation, no design, and no decisions. Just language.
-
-Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
-
-## There is no decision-record layer
-
-Resist the urge to record decisions as standalone artifacts (ADRs, decision logs, "we chose X over Y" files). They are not one of the layers, and this skill does not create them.
-
-The one thing a decision record legitimately captures is **why** something is the way it is. That belongs inside the **system-design** layer, written in the present tense — not in a separate chronological store. A reader should understand why today's design looks the way it does from the design doc alone, without reconstructing a trail of superseded choices.
-
-When you find yourself wanting to write "we decided X over Y because Z," treat it as a signal that the **system-design doc is under-explaining the present**. Fold the *why* into the design doc itself — including why the tempting alternative Y fails — and let version control hold the chronology. If you need a history of decisions to understand why something exists the way it does today, the present documentation is insufficient; fix that, don't start a decision log.
+What the layers are, and why there is no decision-record layer and system design justifies itself, is the **Project knowledge Guide** (`~/.claude/commons/guides/project-knowledge.md`, Imported into every session). This skill is the Procedure that writes them; where they seem to disagree, the Guide wins. Formats: [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) for `CONTEXT.md`, [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md) for system design.
 
 ## Working at one layer at a time
 
@@ -140,18 +106,8 @@ When something is resolved, update the appropriate layer immediately — don't b
 
 `CONTEXT.md` should be totally devoid of implementation details. Do not treat it as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
 
-### Self-justifying system design
+### Write system design self-justifying
 
-Most resolutions in a design grilling land in the **system-design** layer, because that's where mechanisms, functional forms, and the reasoning behind them live. When you write or update a system-design doc, make it self-justifying: describe the present design *and the reasons it has that shape*, in the present tense.
-
-A good system-design doc answers "why is it this way?" on its own:
-
-- State the mechanism and its functional form as they stand today.
-- Explain why the design has this shape — the constraint, property, or domain fact that forces it.
-- Where a reader would reasonably expect a different (often simpler or more obvious) approach, explain why that approach fails — as a standing property of the design, not as a dated "we rejected X" note.
-
-What this is **not**: a chronology of how the design evolved, a list of superseded mechanisms, or a "considered options" log. Describe the destination, not the journey. If the design changes later, the doc changes to describe the new present — the old version lives in version control.
-
-See [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md) for what belongs in this layer and how to write it.
+Most resolutions land in the system-design layer. Write them as the Guide's Stance *system design justifies itself* says, in the present tense, using [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md). Domain claims go in only once grounded in sources (the Guide's *domain claims come from sources, not recall*).
 
 </supporting-info>
