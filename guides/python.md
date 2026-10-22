@@ -25,6 +25,7 @@ The default setup for every Python project. When starting or touching a Python r
 
 - `ci.yml`: one job named `pre-commit` that runs `uv sync --locked` then `uv run --locked pre-commit run --all-files --show-diff-on-failure`. Triggers: every `pull_request`, and `push` to `main` only on `paths: [uv.lock]` (PRs must be up to date and green before merge, so re-running on main only matters for warming the uv cache PRs restore from).
 - Several Python versions: a matrix, job named `pre-commit (${{ matrix.python-version }})`, with `env: UV_PYTHON: ${{ matrix.python-version }}` so every `uv` call, including the hooks', uses it. One version: no matrix.
+- The CI job names are the `main` ruleset's required status checks (Global Guide, *GitHub repo settings*).
 - `permissions: contents: read`, a `concurrency` group cancelling superseded runs, `astral-sh/setup-uv` with `enable-cache: true`.
 - **Pin actions to exact versions** (`astral-sh/setup-uv@v10.3.0`). setup-uv publishes no floating major tags.
 
@@ -34,12 +35,6 @@ The default setup for every Python project. When starting or touching a Python r
 - **Feature PRs never change the version.** A release is its own PR that only bumps it (`task bump -- patch|minor|major`). Never tag by hand. Hotfixes fix forward (fix, then a patch-bump PR).
 - **The version-bump PR is the one that publishes a release when merged.** Whether and how it merges is the Agentic development Guide's PR workflow.
 - A tag created by `GITHUB_TOKEN` triggers no other workflows, so release work belongs in `release.yml` itself.
-
-## GitHub repo settings and branch protection
-
-- Merge settings: squash merge only (no merge commits, no rebase), delete branch on merge.
-- A `main` **ruleset** (Settings → Rules, or `gh api -X POST repos/<owner>/<repo>/rulesets --input ruleset.json`): block deletion and non-fast-forward; require a PR with 0 approvals and `allowed_merge_methods: ["squash"]`; required status checks = the CI job names (`integration_id` 15368, GitHub Actions) with `strict_required_status_checks_policy: true` (branch must be up to date); no bypass actors. Copy py-ev's with `gh api repos/samthorold/py-ev/rulesets/<id>`.
-- Create the ruleset only after CI has reported under the exact job names, and record the required check names in the repo's `CLAUDE.md`: renaming the job or changing the matrix breaks merging until the ruleset is updated.
 
 ## Rust extensions
 
