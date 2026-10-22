@@ -2,7 +2,13 @@
 
 Procedures, one `SKILL.md` directory each. A Skill applies the Guides rather than restating them. How they're linked into `~/.claude/skills/` is in the dotfiles README.
 
-They form one delivery pipeline: `grill-me` / `grill-with-docs` → `to-issues` → `grind-issues` → `tdd`, with `diagnose` for hard bugs, `prototype` for throwaway answers to design questions, and `handoff` between sessions. Issues follow the Global Guide's *Issues* Conventions.
+They form one delivery graph, with three ways in:
+
+- **A design idea**: `grill-with-docs` → `to-issues` (an epic when there's more than one slice) → `grind-issues` → `tdd` per slice.
+- **A `needs-design` issue**: `grill-with-docs` on the issue → `ready` (or `to-issues` if it splits) → `grind-issues`.
+- **A hard bug**: `diagnose`.
+
+Alongside: `grill-me` for plans with no repo docs to write into, `prototype` for throwaway answers to design questions a grill can't settle by talk, and `handoff` between sessions. Issues follow the Global Guide's *Issues* Conventions; the Skills apply the Guides rather than restating them.
 
 ## Provenance
 
