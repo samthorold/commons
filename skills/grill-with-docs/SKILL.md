@@ -119,6 +119,10 @@ When the user uses vague or overloaded terms, propose a precise canonical term. 
 
 When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
 
+### Challenge against the Archetype's Guide
+
+The project's Archetype Guide (e.g. for discrete event simulation), where there is one, says how systems of this shape are generally approached, whatever the Stack. When the design departs from one of its Stances, say so: "The Guide's Stance is X; you're proposing Y — is this a Deviation?" A departure the owner keeps is recorded as a Deviation, with its reason, in the repo's `CLAUDE.md`. If the project's cell has no Archetype Guide yet, a decision another project of the same shape would face is a Gap (`~/.claude/commons/CONTEXT.md`, *Recognising a Lesson*).
+
 ### Cross-reference with code
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"

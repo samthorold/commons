@@ -15,6 +15,14 @@ The default setup for every Python project. When starting or touching a Python r
 - **Version**: single source in `pyproject.toml`. The package's `__version__ = importlib.metadata.version("<dist-name>")`, with a test that it matches `pyproject.toml`.
 - **Taskfile.yml** ([Task](https://taskfile.dev)) for common commands: `test`, `lint`, `fmt`, plus project-specific ones, and `version` / `bump` (`uv version --bump {{.CLI_ARGS}}`). Without `task` installed: `uvx --from go-task-bin task <name>`.
 
+## Testing
+
+How Python Adopters carry out the Agentic development Guide's test-first Stance (the `/tdd` Skill is the Procedure; its examples are Python).
+
+- **Test through the package's public interface**, with plain pytest functions and `assert`. Shared setup goes in fixtures (`conftest.py`), files in `tmp_path`, never the real filesystem or the user's data.
+- **Replace only boundaries, and by injection**: pass in a fake (a small class or function with the boundary's interface) rather than patching. `monkeypatch` is for boundaries that can't be injected (environment variables, `builtins.input`), never for the package's own modules: a test that patches internals breaks on a refactor that keeps behaviour.
+- **Randomness is a parameter**: code takes a `random.Random` (or a seed) instead of using the module-level `random`, so a test passes a seeded instance and the run is reproducible.
+
 ## pre-commit
 
 - `uv run pre-commit install` once per clone. `uv run pre-commit run --all-files` is exactly what CI runs.

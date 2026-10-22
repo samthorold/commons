@@ -44,7 +44,7 @@ RIGHT (vertical):
 
 ### 1. Planning
 
-When exploring the codebase, use the project's domain glossary so that test names and interface vocabulary match the project's language, and respect the documented system design in the area you're touching.
+When exploring the codebase, use the project's `CONTEXT.md` so that test names and interface vocabulary match the project's language, and respect the documented system design in the area you're touching. How tests are written (tooling, idiom, what to fake) comes from your Stack's Guide; what must hold and what counts as evidence (invariants, seeded runs, properties) from your Archetype's Guide, where there is one.
 
 Before writing any code, decide (the Agentic development Guide's Stance *decide, record, carry on*: if the user is present, offer these as defaults you'll act on; if not, decide them yourself):
 
