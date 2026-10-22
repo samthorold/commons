@@ -5,7 +5,7 @@ description: Turn the current conversation context into a PRD and publish it to 
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
 
-The issue tracker and triage label vocabulary are in the repo's `docs/agents/` (`issue-tracker.md`, `triage-labels.md`) if it has them; otherwise use the repo's GitHub Issues through `gh`, with each triage role's label string equal to its name.
+Issues, their states (`ready`, `needs-design`) and the slice body follow the Global Guide's *Issues* Conventions, unless the repo's `CLAUDE.md` records a Deviation.
 
 ## Process
 
@@ -17,7 +17,7 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-3. Write the PRD using the template below, then publish it to the project issue tracker as an **epic** issue. A PRD describes a whole feature, not a single grabbable task, so do **NOT** apply the `ready-for-agent` label — an AFK agent would try to pick up the entire PRD instead of a slice. Make clear in the issue (title and/or body) that it is an epic to be broken down. It carries no agent-ready label of its own; the grabbable, agent-ready work comes from decomposing it.
+3. Write the PRD using the template below, then publish it to the project issue tracker as an **epic** issue. A PRD describes a whole feature, not a single grabbable task, so it is an epic as the Global Guide's *Issues* Conventions describe: "Epic" in the title, no state label, so no agent picks up the whole PRD instead of a slice.
 
 <prd-template>
 
@@ -75,4 +75,4 @@ Any further notes about the feature.
 
 </prd-template>
 
-4. Tell the user the epic is published, and that the next step is `/to-issues` to break it into independently-grabbable tracer-bullet slices. Each child slice references this epic as its `Parent` and carries the `ready-for-agent` label — so the epic stays a planning artifact and the slices are what agents actually pick up.
+4. Tell the user the epic is published, and that the next step is `/to-issues` to break it into independently-grabbable tracer-bullet slices. Each child slice references this epic as its `Parent` and carries its own state — so the epic stays a planning artifact and the slices are what gets picked up.

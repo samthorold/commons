@@ -14,6 +14,18 @@
 - A `main` **ruleset** (Settings → Rules, or `gh api -X POST repos/<owner>/<repo>/rulesets --input ruleset.json`): block deletion and non-fast-forward; require a PR with 0 approvals and `allowed_merge_methods: ["squash"]`; required status checks = the CI job names (`integration_id` 15368, GitHub Actions) with `strict_required_status_checks_policy: true` (branch must be up to date); no bypass actors. Copy py-ev's with `gh api repos/samthorold/py-ev/rulesets/<id>`.
 - Create the ruleset only after CI has reported under the exact job names, and record the required check names in the repo's `CLAUDE.md`: renaming the job or changing the matrix breaks merging until the ruleset is updated.
 
+## Issues
+
+- **Work is tracked in the repo's GitHub Issues**, through `gh`. A repo that tracks it elsewhere, or labels differently, records a Deviation in its `CLAUDE.md`.
+- **An open issue is in one of three states**, by what it needs next, not by who does it:
+  - `ready`: specified well enough to work on, by an agent or by the owner.
+  - `needs-design`: needs a design session with the owner (a grill) before it can be `ready`.
+  - no state label: the backlog, not yet looked at or not scheduled. Nothing picks it up.
+- **An issue that won't be done is closed as *not planned*.** If the reason is worth knowing, it goes into the system-design docs, as part of why the design has its shape.
+- **An epic** (a whole feature, broken into slices) says "Epic" in its title and carries no state label, so it is never picked up as work; its slices are.
+- **A slice's body is its contract**: *Parent* (the epic, if any), *What to build* (behaviour end to end, not layer by layer; no file paths, which go stale), *Acceptance criteria* (each independently checkable), *Out of scope*, *Blocked by* (issue references, or "None"). When discussion changes the contract, rewrite the body rather than leaving the change in comments.
+- `bug` and `enhancement` are optional categories, not states.
+
 ## Lessons
 
 If something in a Guide proves wrong or incomplete while you work, or you hit something another project in the same Stack or Archetype would also hit, record a Lesson as described in `~/.claude/commons/lessons/README.md`. The Signals and the filter are in `~/.claude/commons/CONTEXT.md`.

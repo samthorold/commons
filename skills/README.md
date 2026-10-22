@@ -2,7 +2,7 @@
 
 Procedures, one `SKILL.md` directory each. A Skill applies the Guides rather than restating them. How they're linked into `~/.claude/skills/` is in the dotfiles README.
 
-They form one delivery pipeline: `grill-me` / `grill-with-docs` → `to-prd` → `to-issues` → `triage` → `grind-issues` → `tdd`, with `diagnose` for hard bugs, `prototype` for throwaway answers to design questions, and `handoff` between sessions. Where a repo has `docs/agents/issue-tracker.md` and `triage-labels.md`, the planning Skills read them; otherwise they assume GitHub Issues and the default labels.
+They form one delivery pipeline: `grill-me` / `grill-with-docs` → `to-prd` → `to-issues` → `triage` → `grind-issues` → `tdd`, with `diagnose` for hard bugs, `prototype` for throwaway answers to design questions, and `handoff` between sessions. Issues follow the Global Guide's *Issues* Conventions.
 
 ## Provenance
 
