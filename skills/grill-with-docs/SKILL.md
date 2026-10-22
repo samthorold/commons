@@ -1,6 +1,6 @@
 ---
 name: grill-with-docs
-description: Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates documentation (CONTEXT.md, domain docs, system design) inline as decisions crystallise. Use when user wants to stress-test a plan against their project's language and documented decisions.
+description: Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates documentation (CONTEXT.md, domain docs, system design) inline as decisions crystallise. Use when user wants to stress-test a plan against their project's language and documented decisions, or to design a `needs-design` issue until it is `ready`.
 ---
 
 <what-to-do>
@@ -10,6 +10,8 @@ Interview me relentlessly about every aspect of this plan until we reach a share
 Ask the questions one at a time, waiting for feedback on each question before continuing.
 
 If a question can be answered by exploring the codebase, explore the codebase instead.
+
+If the grill was about an issue ("grill #42"), end it by rewriting the issue's body as the slice contract and labelling it `ready` (the Global Guide's *Issues* Conventions), or, if it turned out to be several slices, by handing over to `/to-issues`.
 
 </what-to-do>
 
