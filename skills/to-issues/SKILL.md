@@ -1,11 +1,11 @@
 ---
 name: to-issues
-description: Break a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices. Use when user wants to convert a plan into issues, create implementation tickets, or break down work into issues.
+description: Break a settled plan into independently-grabbable issues using tracer-bullet vertical slices, under an epic when there is more than one. Use when user wants to convert a plan, spec or PRD into issues, create an epic or implementation tickets, or break down work into issues, typically right after a grill.
 ---
 
 # To Issues
 
-Break a plan into independently-grabbable issues using vertical slices (tracer bullets).
+Break a plan into independently-grabbable issues using vertical slices (tracer bullets). This is the step after a grill: the grill has already written the design into the repo's docs, so the issues point at it rather than restating it.
 
 Issues, their states (`ready`, `needs-design`) and the slice body follow the Global Guide's *Issues* Conventions, unless the repo's `CLAUDE.md` records a Deviation.
 
@@ -31,7 +31,7 @@ Each slice is `ready` (can be implemented and merged with no further design) or 
 - Prefer many thin slices over few thick ones
 </vertical-slice-rules>
 
-### 4. Quiz the user
+### 4. Present the breakdown
 
 Present the proposed breakdown as a numbered list. For each slice, show:
 
@@ -40,25 +40,46 @@ Present the proposed breakdown as a numbered list. For each slice, show:
 - **Blocked by**: which other slices (if any) must complete first
 - **User stories covered**: which user stories this addresses (if the source material has them)
 
-Ask the user:
+Check, and invite the owner to correct: is the granularity right (too coarse / too fine)? are the dependencies right? should any slices be merged or split? are the right slices `needs-design`? Following the Agentic development Guide's *decide, record, carry on*, the breakdown is your default: publish it unless corrected.
 
-- Does the granularity feel right? (too coarse / too fine)
-- Are the dependency relationships correct?
-- Should any slices be merged or split further?
-- Are the right slices marked `needs-design`?
+### 5. Publish the epic (more than one slice only)
 
-Iterate until the user approves the breakdown.
+A plan with more than one slice gets an epic (Global Guide, *Issues*): a parent that says what the feature is for and ties the slices together. One slice needs no epic. If the plan came from an existing issue, that issue becomes the epic: retitle it and remove its state label.
 
-### 5. Publish the issues to the issue tracker
+<epic-template>
+Title: `Epic: <feature>`
 
-For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. Label each with its state.
+## Problem
+
+The problem, from the user's perspective.
+
+## Who it's for
+
+A numbered list of user stories ("As an <actor>, I want <feature>, so that <benefit>"), covering the whole feature. The slices are checked against these.
+
+## Design
+
+Links to the system-design (and domain) docs the grill wrote. Don't restate them, and don't record decisions here: a decision that isn't in the docs yet goes into them first, in the present tense.
+
+## Out of scope
+
+What the feature deliberately doesn't do. If it's a standing property of the design, it belongs in the system-design docs instead.
+
+## Slices
+
+Filled in once the slices are published.
+</epic-template>
+
+### 6. Publish the slices
+
+For each slice, publish a new issue using the template below, labelled with its state.
 
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
 
 <issue-template>
 ## Parent
 
-A reference to the parent issue on the issue tracker (if the source was an existing issue, otherwise omit this section).
+A reference to the epic (omit if there is none).
 
 ## What to build
 
@@ -84,4 +105,4 @@ Or "None - can start immediately" if no blockers.
 
 </issue-template>
 
-Do NOT close or modify any parent issue.
+Then list the slices in the epic's *Slices* section. Never close the epic: it closes when its last slice does.
