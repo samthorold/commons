@@ -1,0 +1,7 @@
+---
+address: guides/project-knowledge.md#research-working-folders-are-temporary (and #stance-domain-claims-come-from-sources-not-recall)
+origin: samthorold/portfolio#6
+signal: gap
+---
+
+What lasts from research is the opinion, not a summary of the readings. A summary adds little: most of what it says is already in the model's training, so it repeats what an agent would recall anyway, and loading it into context dilutes the Stances that carry the value. The durable form is a Stance (or other opinion: why, how to apply, what would change our mind) plus a signpost to its grounding, so an agent uses the recorded opinion instead of re-deriving it from recall. The signpost carries three things: the sources, with how well each was read (in full, summary only, recalled); where research disagreed with recall, which is the one thing research adds over the model's weights and the thing nothing else will catch; and what the sources leave open, so a gap isn't filled fluently from recall. Research outputs are kept only until a Stance exists to carry them (for an open question that may take several sessions, committed beside the question so they aren't lost), then reduced to the signpost and deleted. A caution on the observation that research usually just confirms recall: it partly reflects briefs written from recall (see the Lesson on briefing from the question, not a hypothesis), so the remedy for that is the brief, not skipping research.
