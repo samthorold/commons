@@ -26,4 +26,4 @@ How this repo and its Skills are linked into `~/.claude/` is machine setup, so i
 
 ## Changing it
 
-Commit straight to `main`, no PR, as in dotfiles. A Revision's reason goes in the commit message. Keep it free of secrets and private details: the repo is public.
+Commit straight to `main`, no PR, as in dotfiles. A new Skill is written from a Procedure already carried out by hand, not in advance (candidates waiting on a first run: Promotion sweep, Propagation, Adoption). A Revision's reason goes in the commit message. Keep it free of secrets and private details: the repo is public.
