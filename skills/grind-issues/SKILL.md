@@ -100,6 +100,12 @@ up with main by merging it, never rebasing; resolve conflicts hunk by
 hunk; and before pushing, check that `git diff origin/main --stat` lists
 only this issue's changes.
 
+Run one shell command per call: no `cd <dir> && …`, chains, pipes into
+an interpreter or heredocs. In a worktree a compound command is refused
+whole, and nothing in it runs, even if the refusal reads as though the
+first steps did. Write and change files with the Write and Edit tools,
+and run scripts by absolute path.
+
 ## Your task
 
 Implement this issue using strict TDD by invoking the `/tdd` skill.
@@ -116,14 +122,18 @@ the Guide's Stance "decide, record, carry on".
    workflow: planning, tracer bullet, incremental red-green loop,
    refactor. Do NOT write all tests first — vertical slices only.
 4. When all tests pass and you're satisfied with the implementation,
-   commit, push, and open a PR:
+   commit, push, and open a PR, each command as its own call:
 
    git add <specific-files>
    git commit -m "<descriptive message>
 
    Closes #[NUMBER]"
    git push -u origin issue-[NUMBER]-[SLUG]
-   gh pr create --title "<short title>" --body "$(cat <<'EOF'
+
+   Write the PR body with the Write tool to a file named after the issue
+   (`pr-body-[NUMBER].md`, since other agents are working too), outside
+   the repo, e.g. in your scratchpad directory:
+
    ## Summary
    <1-3 bullets>
 
@@ -133,13 +143,11 @@ the Guide's Stance "decide, record, carry on".
    - <what the tests verify>
 
    🤖 Generated with [Claude Code](https://claude.com/claude-code)
-   EOF
-   )"
+
+   then: gh pr create --title "<short title>" --body-file <path to pr-body-[NUMBER].md>
 
 5. Don't spawn agents of your own, and don't leave anything running in
-   the background: report back only once all your work has stopped. If
-   you write the PR body to a file, name it after the issue
-   (e.g. `pr-body-[NUMBER].md`), since other agents are working too.
+   the background: report back only once all your work has stopped.
 
 6. Report back: what you implemented, the PR number, and any problems.
    Also report anything that looked like a Lesson (the four Signals in
