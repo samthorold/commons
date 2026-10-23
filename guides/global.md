@@ -9,6 +9,14 @@
 - A `main` **ruleset** (Settings → Rules, or `gh api -X POST repos/<owner>/<repo>/rulesets --input ruleset.json`): block deletion and non-fast-forward; require a PR with 0 approvals and `allowed_merge_methods: ["squash"]`; required status checks = the CI job names (`integration_id` 15368, GitHub Actions) with `strict_required_status_checks_policy: true` (branch must be up to date); no bypass actors. Copy py-ev's with `gh api repos/samthorold/py-ev/rulesets/<id>`.
 - Create the ruleset only after CI has reported under the exact job names, and record the required check names in the repo's `CLAUDE.md`: renaming the job or changing the matrix breaks merging until the ruleset is updated.
 
+## Checks and CI
+
+- **A repo's checks are its pre-commit hooks, and CI runs exactly them.** `ci.yml` has one job, named `pre-commit` (with a version matrix, `pre-commit (<version>)`), that runs `pre-commit run --all-files --show-diff-on-failure`. *Why:* what passes locally passes in CI, and one job name keeps every repo's required checks the same. The Stack's Guide says how pre-commit and the tools are installed and pinned, and which hooks it adds.
+- Every repo's hooks include `pre-commit/pre-commit-hooks` (trailing-whitespace, end-of-file-fixer, check-yaml, check-toml, check-json, check-added-large-files), actionlint on workflows (it also shellchecks their `run:` steps) and shellcheck on shell scripts, all at pinned versions.
+- Triggers: every `pull_request`, and `push` to `main` only on the paths of lock files and toolchain pins. PRs must be up to date and green before merge, so re-running on `main` only matters for warming the caches PRs restore from.
+- `permissions: contents: read`, and a `concurrency` group cancelling superseded runs.
+- **Pin actions to exact versions** (`astral-sh/setup-uv@v10.3.0`): some, like setup-uv, publish no floating major tags, and an exact pin changes only in a PR.
+
 ## Issues
 
 - **Work is tracked in the repo's GitHub Issues**, through `gh`. A repo that tracks it elsewhere, or labels differently, records a Deviation in its `CLAUDE.md`.
@@ -20,6 +28,11 @@
 - **An epic** (a whole feature, broken into slices) says "Epic" in its title and carries no state label, so it is never picked up as work; its slices are.
 - **A slice's body is its contract**: *Parent* (the epic, if any), *What to build* (behaviour end to end, not layer by layer; no file paths, which go stale), *Acceptance criteria* (each independently checkable), *Out of scope*, *Blocked by* (issue references, or "None"). When discussion changes the contract, rewrite the body rather than leaving the change in comments.
 - `bug` and `enhancement` are optional categories, not states.
+
+## Known traps
+
+- `actionlint-py` ships only an sdist that downloads the binary on build. On macOS with python.org Python that fails with `CERTIFICATE_VERIFY_FAILED` until `Install Certificates.command` has run; one-off workaround `SSL_CERT_FILE=/etc/ssl/cert.pem` before the install. *Remove when:* actionlint-py ships wheels, or the Guides drop it for another way to get actionlint.
+- pre-commit only sees tracked files: stage a new file before expecting a hook (e.g. shellcheck) to check it. *Remove when:* pre-commit checks untracked files (by design it doesn't, so probably never).
 
 ## Lessons
 

@@ -27,16 +27,15 @@ How Python Adopters carry out the Agentic development Guide's test-first Stance 
 ## pre-commit
 
 - `uv run pre-commit install` once per clone. `uv run pre-commit run --all-files` is exactly what CI runs.
-- Hooks: `pre-commit/pre-commit-hooks` (trailing-whitespace, end-of-file-fixer, check-yaml, check-toml, check-json, debug-statements, check-added-large-files), then local hooks through `uv run --locked` (so they use `uv.lock`'s versions, and fail if it's stale): ruff check `--fix`, ruff format, the type checker(s), actionlint (also shellchecks workflow `run:` steps), shellcheck on shell scripts, and the tests (`pass_filenames: false`).
+- pre-commit itself is a dev dependency. Beyond the Global Guide's hooks (plus `debug-statements`), local hooks run through `uv run --locked` (so they use `uv.lock`'s versions, and fail if it's stale): ruff check `--fix`, ruff format, the type checker(s), actionlint, shellcheck, and the tests (`pass_filenames: false`).
 - actionlint and shellcheck come from PyPI as dev dependencies (`actionlint-py`, `shellcheck-py`), not system installs.
 
 ## CI (GitHub Actions)
 
-- `ci.yml`: one job named `pre-commit` that runs `uv sync --locked` then `uv run --locked pre-commit run --all-files --show-diff-on-failure`. Triggers: every `pull_request`, and `push` to `main` only on `paths: [uv.lock]` (PRs must be up to date and green before merge, so re-running on main only matters for warming the uv cache PRs restore from).
+The shape is the Global Guide's *Checks and CI*; the Python steps are:
+
+- The `pre-commit` job runs `uv sync --locked` then `uv run --locked pre-commit run --all-files --show-diff-on-failure`, after `astral-sh/setup-uv` with `enable-cache: true`. The `push` to `main` paths are `[uv.lock]`.
 - Several Python versions: a matrix, job named `pre-commit (${{ matrix.python-version }})`, with `env: UV_PYTHON: ${{ matrix.python-version }}` so every `uv` call, including the hooks', uses it. One version: no matrix.
-- The CI job names are the `main` ruleset's required status checks (Global Guide, *GitHub repo settings*).
-- `permissions: contents: read`, a `concurrency` group cancelling superseded runs, `astral-sh/setup-uv` with `enable-cache: true`.
-- **Pin actions to exact versions** (`astral-sh/setup-uv@v10.3.0`). setup-uv publishes no floating major tags.
 
 ## Releases
 
@@ -47,23 +46,17 @@ How Python Adopters carry out the Agentic development Guide's test-first Stance 
 
 ## Rust extensions
 
-When part of a project needs compiled speed, it becomes a Rust extension in the same repo, with Python orchestrating. Reference implementation: `~/Projects/py-minimax-games` (`rust/`, `minimax_games._native`). Copy from it.
+When part of a project needs compiled speed, it becomes a Rust extension in the same repo, with Python orchestrating. Reference implementation: `~/Projects/py-minimax-games` (`rust/`, `minimax_games._native`). Copy from it. The crate follows the Rust Guide; this section adds only what the Python+Rust cell needs.
 
 - **One crate, `rust/`, in maturin's mixed layout**: `[tool.maturin]` with `manifest-path = "rust/Cargo.toml"`, `module-name = "<pkg>._native"`, `python-source = "src"`. The Python package stays at `src/<pkg>/`. Make it a Cargo workspace only when a second engine arrives.
 - **maturin replaces `uv_build`** (`requires = ["maturin>=X.Y,<X.(Y+1)"]`). PyO3 behind a `python` cargo feature (enabled by `[tool.maturin] features`), so plain `cargo test` needs no Python. Build for the stable ABI from the minimum Python (`abi3-py3XX`), so one wheel per platform serves every version.
 - **`[tool.uv] cache-keys`** must list `pyproject.toml`, `rust/Cargo.toml`, `rust/Cargo.lock` and `rust/src/**/*.rs`, or `uv run` keeps a stale extension after Rust changes.
-- **Pin Rust in `rust-toolchain.toml` at the repo root** (rustup finds it from the working directory, not from `rust/`), with `profile = "minimal"` and `components = ["clippy", "rustfmt"]`; include it in the sdist (`[tool.maturin] include`). Upgrade deliberately in its own PR.
+- **The Rust Guide's `rust-toolchain.toml` sits at the repo root**, not in `rust/`: rustup finds it from the working directory, and cargo, maturin and the hooks run from the root. Include it in the sdist (`[tool.maturin] include`).
 - **Type stubs** for the extension in `src/<pkg>/_native/*.pyi`, with no `__init__.py`, so the compiled module wins at import time.
-- **pre-commit**: `cargo fmt --check`, `cargo clippy --all-targets --all-features -- -D warnings` (through `uv run --locked`, so PyO3's build script finds the venv's Python) and `cargo test`, all `language: system`, `files: ^(rust/|rust-toolchain\.toml$)`, `pass_filenames: false`. pytest also runs on Rust and TOML changes.
-- **CI** stays one `pre-commit` job: `rustup toolchain install` and `Swatinem/rust-cache` (exact version, `workspaces: rust`) before `uv sync --locked`. The `push` to `main` paths also include `rust/Cargo.lock` and `rust-toolchain.toml`, to keep the cargo cache warm.
+- **pre-commit**: the Rust Guide's cargo hooks with `--manifest-path rust/Cargo.toml` and `files: ^(rust/|rust-toolchain\.toml$)`, clippy run through `uv run --locked` so PyO3's build script finds the venv's Python. pytest also runs on Rust and TOML changes.
+- **CI**: the Rust Guide's toolchain and cache steps (`workspaces: rust`) before `uv sync --locked`, and its `push` paths under `rust/`.
 - **Releases**: `release.yml` runs `uv build` on the platform that needs a wheel (e.g. `macos-15` for Apple silicon), giving the sdist plus that wheel; the dry run builds on every PR.
 - **The Python implementation stays the reference**: differential tests compare the Rust and Python results after every step on seeded inputs, and bit-identical randomness (port CPython's MT19937 and the `random` methods used) makes them exact.
-- **Traps**: pinning an exact toolchain makes rustup download it once even if `stable` is the same version (*remove when:* rustup reuses a matching `stable`; it's a one-off cost, so drop it if nobody is surprised again).
-
-## Known traps
-
-- `actionlint-py` ships only an sdist that downloads the binary on build. On macOS with python.org Python that fails with `CERTIFICATE_VERIFY_FAILED` until `Install Certificates.command` has run; one-off workaround `SSL_CERT_FILE=/etc/ssl/cert.pem uv sync`. *Remove when:* actionlint-py ships wheels, or the Guide drops it for another way to get actionlint.
-- pre-commit only sees tracked files: stage a new file before expecting a hook (e.g. shellcheck) to check it. *Remove when:* pre-commit checks untracked files (by design it doesn't, so probably never).
 
 ## Lessons
 
