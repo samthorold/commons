@@ -64,6 +64,8 @@ Mark this issue's task `in_progress` via `TaskUpdate`. Then read the issue body 
 - **Already done**: the feature/fix already exists in the codebase. → Close with a comment explaining why, mark the task `completed`, move to next issue.
 - **Unclear**: not enough detail to implement. → Post a comment saying what design is missing; move the issue from `ready` to `needs-design`; mark the task `completed` (it's been processed), move to next issue. Issues sequenced after it may need re-planning.
 
+**If the Adopter keeps a register** (the Project knowledge Guide's end-state Stance), list the hypotheses an actionable issue will make Due: those whose Due mechanisms it touches, by the design's own rule. Split them by cost. **Cheap** ones are read by the full test command (the one run before committing). **Expensive** ones need anything beyond it: slow lanes, multi-seed instruments. The cheap ones go into the sub-agent's brief; the expensive ones are for the completion report. Nobody in the run defers or reads an expensive one: whether to read it now, defer it or revise the design is the owner's review, because a change deciding to defer the readings it made Due is the decision most open to Drift.
+
 ### Step 2 — Delegate to sub-agent
 
 Spawn a sub-agent using the **Agent tool** with `isolation: "worktree"`, so parallel agents never share a checkout, and a `name` (e.g. `issue-[NUMBER]`) so you can message it again in Step 3. Launch independent issues in the same message so they run concurrently. The sub-agent gets a self-contained prompt with everything it needs.
@@ -91,6 +93,16 @@ test parallelism to [LIMIT].]
 ## Issue description
 
 [FULL ISSUE BODY AND RELEVANT COMMENTS]
+
+[IF THE ADOPTER KEEPS A REGISTER:
+## Hypotheses this change makes Due
+
+Cheap, read by the full test command: [LIST, or "none"]. When they
+pass, update their register rows (status, reading, this commit) in the
+PR. If one fails under its reading rule, don't change the rule or the
+test to make it pass: report it.
+Expensive: [LIST, or "none"]. Don't run them and don't defer them; the
+orchestrator reports them for the owner's review.]
 
 ## How to work
 
@@ -192,6 +204,7 @@ When all issues have been processed, report a summary:
 - Issues implemented and merged (with PR numbers)
 - Issues closed as already done
 - Issues sent back to `needs-design`
+- Hypotheses the run made Due and didn't read (the expensive ones, and any cheap one that failed), each with the PR that made it Due: the owner's review, before the next change
 - Lessons the sub-agents reported. Record each that passes the filter (`~/.claude/commons/CONTEXT.md`, "Recognising a Lesson") as a Lesson, as `~/.claude/commons/lessons/README.md` describes.
 
 ## Rules
