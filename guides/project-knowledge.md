@@ -37,7 +37,7 @@
 
 ## Stance: the system design states its end state as hypotheses
 
-- **Stance:** the system design states the end state and the hypotheses each part of it rests on (vocabulary: `~/.claude/commons/CONTEXT.md`, *End states and hypotheses*). Each hypothesis has its own test, and its reading rule and review interval are declared with it. Status lives in a register derived from readings, never in the design.
+- **Stance:** the system design states the end state and the hypotheses each part of it rests on (vocabulary: `~/.claude/commons/CONTEXT.md`, *End states and hypotheses*). Each hypothesis has its own test, and its reading rule and review interval are stated beside it in the system design; the test implements the rule. Status lives in a register derived from readings, never in the design.
 - **Why:** an end state is never certain. A mature project then drifts into local optimisation, each step judged against the last result instead of against where the work is going. Declaring rules before the readings makes that Drift visible as a declared value that changed with no design change. Status kept in the design would turn the design into a chronology.
 - **How to apply:**
   - Tests stay in the suite whatever the status. A status holds only for the implementation it was read on.
