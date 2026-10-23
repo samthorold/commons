@@ -54,12 +54,14 @@
 
 - **Stance:** every claim in the domain layer is grounded in sources first, cited, with a note of evidence quality: what was read in full, what only from abstracts, what was recalled rather than read, and what the sources leave open. Only then is it carried into the design.
 - **Why:** an agent's own reading of how the world works is fluent and often wrong, and a design built on it inherits the error with no trail back to check.
-- **How to apply:** don't offer "my read" of the domain as a reason for a design choice. Where the literature is silent, say so, and settle the gap by a reading set in advance across the range the domain allows.
+- **How to apply:** don't offer "my read" of the domain as a reason for a design choice. Where the literature is silent, say so, and settle the gap by a reading set in advance across the range the domain allows. Note also where the sources disagreed with recall: it is the one thing research adds over the model's weights, and nothing else will catch it. Brief research from the owner's question, not from a working hypothesis: the categories, candidate answers and framing collected so far stay out of the brief, or the research echoes them back as findings and can no longer say whether the framing was right. Delegated researchers, who see only the brief, are the most prone to this. Research that only confirms recall usually means a brief written from recall; the remedy is the brief, not skipping research.
 - **What would change our mind:** a domain the project defines itself (a game's rules), where the rules are the source.
 
-## Research working folders are temporary
+## Research lands as an opinion and a signpost
 
-Research outputs (deep-research `research_notes/` and `reports/`, scratch runs) are never committed. When the research is finished, fold what is durable into its layer (domain findings into the domain docs, measurements and project-specific analysis into `docs/research/<issue>-<slug>.md`, design into system design through a grill), then delete the working folders.
+What lasts from research is the opinion, not a summary of the readings. A summary mostly repeats what an agent would recall anyway, and loaded into context it dilutes the Stances that carry the value. So research lands as a Stance or other opinion at its layer (domain findings in the domain docs, measurements and project-specific analysis in `docs/research/<issue>-<slug>.md`, design in system design through a grill), with a signpost to its grounding: the sources and the evidence notes the Stance above asks for.
+
+Research outputs (deep-research `research_notes/` and `reports/`, scratch runs) are working folders, not committed, and deleted once the opinion and its signpost have landed. The exception is a question that stays open across sessions: its outputs are committed beside the question, each pass labelled with how it was briefed, until a Stance exists to carry them.
 
 ## Lessons
 
