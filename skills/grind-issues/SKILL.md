@@ -109,8 +109,10 @@ orchestrator reports them for the owner's review.]
 You are in your own git worktree. Follow the Agentic development Guide
 (~/.claude/commons/guides/agentic-development.md): in particular, catch
 up with main by merging it, never rebasing; resolve conflicts hunk by
-hunk; and before pushing, check that `git diff origin/main --stat` lists
-only this issue's changes.
+hunk, and after resolving one in prose, check that `git diff origin/main
+-- <file>` removes or changes none of main's headings; and before
+pushing, check that `git diff origin/main --stat` lists only this
+issue's changes.
 
 Run one shell command per call: no `cd <dir> && …`, chains, pipes into
 an interpreter or heredocs. In a worktree a compound command is refused
