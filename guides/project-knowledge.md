@@ -35,6 +35,20 @@
 - **How to apply:** no chronology, no "considered options" log, no status or dates. A rejected feature request that is worth remembering goes here, as part of why the design has its shape (the issue is closed as *not planned*). Parameter values belong with the code, not here.
 - **What would change our mind:** design docs that grow so long agents stop reading them; then split by area, but keep the present tense.
 
+## Stance: the system design states its end state as hypotheses
+
+- **Stance:** the system design states the end state and the hypotheses each part of it rests on (vocabulary: `~/.claude/commons/CONTEXT.md`, *End states and hypotheses*). Each hypothesis has its own test, and its reading rule and review interval are declared with it. Status lives in a register derived from readings, never in the design.
+- **Why:** an end state is never certain. A mature project then drifts into local optimisation, each step judged against the last result instead of against where the work is going. Declaring rules before the readings makes that Drift visible as a declared value that changed with no design change. Status kept in the design would turn the design into a chronology.
+- **How to apply:**
+  - Tests stay in the suite whatever the status. A status holds only for the implementation it was read on.
+  - A refuted hypothesis changes the system design, and that change is how the end state is revised. Declared values change only together with such a change.
+  - A reading declares its size or its stopping rule before it runs, as part of its reading rule. A reading that leans one way without crossing its line is undecided: read again on fresh runs, judged alone, or use a sequential rule that keeps going until it crosses a declared bound. Adding runs to the same reading until it crosses the line is not a reading.
+  - Between revisions, grain only gets finer. A hypothesis may be replaced by finer ones under the same part of the end state. A replacement that goes up a grain or sideways is a design change.
+  - A link means relevance, not sufficiency. Supported children don't make their parent supported: the parent is resolved only by its own test.
+  - Tests near the top are often cheap, coarse necessary conditions (e.g. "a game against a mock human ends in under ten minutes"). They can refute but not confirm, and they run on every change.
+  - A supported hypothesis doesn't move into the domain layer. Domain facts come from sources about the world.
+- **What would change our mind:** registers that can't stay derived, for instance expensive instruments whose stored outputs go stale. Or reviews that cost more than the Drift they catch.
+
 ## Stance: domain claims come from sources, not recall
 
 - **Stance:** every claim in the domain layer is grounded in sources first, cited, with a note of evidence quality: what was read in full, what only from abstracts, what was recalled rather than read, and what the sources leave open. Only then is it carried into the design.
