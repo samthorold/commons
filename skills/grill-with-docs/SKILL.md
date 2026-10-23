@@ -1,11 +1,13 @@
 ---
 name: grill-with-docs
-description: Grilling session about a plan that belongs to a repo: challenges it against the repo's language, domain and system design (and its Archetype's Guide), and writes what's settled into CONTEXT.md and the design docs inline. Use when user wants to stress-test a project's plan or design, or to grill a `needs-design` issue until it is `ready`. For a plan with no repo docs to write into, use grill-me.
+description: Grilling session about a plan that belongs to a repo: challenges it against the repo's language, domain and system design (and its Archetype's Guide), and writes what's settled into CONTEXT.md and the design docs inline. Use when user wants to stress-test a project's plan or design, or to grill a `needs-design` issue until it is `ready`. For a plan with no repo docs to write into, use grill-me; for a concept that is itself still in question, open-session.
 ---
 
 <what-to-do>
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one.
+
+Ask only what needs me. A question you can answer confidently from the Commons, the repo's docs or the domain's sources, answer it yourself, write it where it belongs, say so, and carry on. For each question you do ask, give a light recommendation. If the questions keep getting reshaped instead of answered, the concepts themselves are in question: switch to `/open-session`.
 
 Ask the questions one at a time, waiting for feedback on each question before continuing.
 
