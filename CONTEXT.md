@@ -83,6 +83,9 @@ Context comes in three layers: the **Map** (always), the Adopter's own Guides **
 
 The two links: a **Lesson → its Address → a Guide** (upward), and a **Guide Revision → Imports → Adopters** (downward).
 
+**Sweep**: the work that finds what no longer needs to be where it is, and removes it: Lessons waiting for Promotion, Known traps whose *remove when* is met or that can move up the ladder, an Adopter's Local copy of knowledge a Guide now holds, and Drift. It runs as a recurring review (`lessons/README.md`). An **idle sweep** is one slice of it, done by an agent while it waits on a background process, and only reported (Agentic development Guide, *Idle sweeps*).
+*Avoid:* pruning, cleanup.
+
 ### Recognising a Lesson
 
 Four **Signals**, each needing only the context an agent already has:

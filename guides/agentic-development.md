@@ -34,6 +34,13 @@
 - **Each worktree builds its own environment** (virtualenv, compiled artefacts), from shared caches. On a small machine, cap build and test parallelism per agent so several agents fit at once.
 - **Slices that touch the same files** (lock files, a shared results document, a CLI entry point) are fine to run in parallel: the later PR merges `main` in and resolves. Sequence them only when one slice's design depends on another's outcome.
 
+## Idle sweeps
+
+- **An agent waiting on a background process does one slice of the sweep** (`CONTEXT.md`, *Sweep*): while it watches CI, a long test run or reading, or a Monitor, with nothing else of its own to do. A wait expected to last only a minute or two gets none. *Why:* the wait costs nothing, and between scheduled sweeps traps and Local copies outlive their need, costing context in every session.
+- **One slice is one item**, the first not already reported: a Lesson in the inbox, a Known trap's *remove when*, or one of the current repo's agent docs (`CLAUDE.md` and what it points to) against its Guides, for Local copies of what a Guide now holds and for Drift. It is read-only, so it can be dropped the moment the wait ends with nothing half-done.
+- **It reports and changes nothing.** Findings go in the agent's next status to the owner and as a comment on the recurring sweep's issue, where the next sweep acts on them; a sub-agent reports to whoever launched it. *Why:* the agent is mid-task in another piece of work, and which calls aren't an agent's to make is not yet settled (see *decide, record, carry on*).
+- **What would change our mind:** reports that pile up unread, or items an agent could have resolved safely that keep waiting for the next sweep. Then some items move to being resolved in place.
+
 ## Known traps
 
 - **GitHub closes `#N` wherever a closing keyword sits directly before it**: `close`, `closes`, `fix`, `fixes`, `resolve` or `resolves` (any case), anywhere in a PR body or commit message, even inside a quoted table cell or a sentence about another issue. Merging then closes that issue unintended. Write "#N closes" or "the row closing #N" unless you mean it, and check a PR body's references before merging (`grind-issues` does this). *Remove when:* GitHub stops treating keywords in quoted text as closing, or a check enforces it on every PR.
