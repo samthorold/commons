@@ -57,7 +57,11 @@ Each Guide is pinned to a cell, a row or a column of the Stack × Archetype matr
 
 **Deviation**: a *recorded* departure from a Guide, with its reason, in the Adopter's `CLAUDE.md`.
 
-**Drift**: an *unrecorded* gap where an Adopter is behind the Commons. Drift is a state you observe, not a work item; what an Adopter does about it is its own workflow.
+**Drift**: an *unrecorded* departure from something declared. Two cases:
+- For an Adopter and the Commons: a gap where the Adopter is behind a Guide. (Recorded, it is a Deviation.)
+- For a system design: a declared value (a reading rule, an instrument, a review interval) that changed without a change to the system design. (With one, it is part of revising the end state; see *End states and hypotheses*.)
+
+Drift is a state you observe, not a work item; what an Adopter does about it is its own workflow.
 
 ## Channels: how knowledge reaches an agent
 
@@ -91,6 +95,25 @@ Four **Signals**, each needing only the context an agent already has:
 The filter: *would this hold for another Adopter in the same cell, row or column?* If not, it's Local. The **Address** is the narrowest Guide whose Scope explains why the Lesson is true; if nothing fits, the Gap may be a missing Guide.
 
 Detection is best done as a separate pass at a natural checkpoint (e.g. the end of a PR) rather than continuous vigilance. Missing a Lesson is cheap, because a real one recurs; a false one is filtered at Promotion.
+
+## End states and hypotheses
+
+How an Adopter's system design says where it is going when that can't be known for sure.
+
+**End state**: what the system is meant to become, as its system design states it now. Always uncertain. It moves only when a hypothesis resolves, and only as a change to the system design.
+*Avoid:* goal, target, vision.
+
+**Hypothesis**: something a part of the end state rests on that isn't known to hold yet. The system design states it in the present tense, with no status. It names the part of the end state it hangs from, and it has its own test.
+*Avoid:* belief, claim, assumption.
+
+**Reading rule**: what a hypothesis's test must show for the hypothesis to be *supported*, *refuted* or *undecided*, including how it treats the instrument's error. It is declared before any reading it judges.
+*Avoid:* threshold, success criterion.
+
+**Reading**: one run of a test, judged by the reading rule in force when it ran, and true of the implementation it ran on. A reading stands alone: it isn't pooled with an earlier undecided one to reach a status.
+
+**Due**: a hypothesis that needs a reading. Either it has none under its current reading rule, its review interval (*N*) has passed, or what it was read on has changed. Due hypotheses are reviewed before any other change: read now, deferred with a reason, or the design revised.
+
+**Register**: the status of every hypothesis (supported, refuted, undecided, due), with its last reading. It is kept apart from the domain and the system design, and derived from tests and readings rather than written by hand. Status lives here and nowhere else. *Supported* means only that the hypothesis has survived its tests so far.
 
 ## The Portfolio (outside the Commons)
 
