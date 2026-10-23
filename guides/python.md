@@ -21,6 +21,7 @@ How Python Adopters carry out the Agentic development Guide's test-first Stance 
 
 - **Test through the package's public interface**, with plain pytest functions and `assert`. Shared setup goes in fixtures (`conftest.py`), files in `tmp_path`, never the real filesystem or the user's data.
 - **Replace only boundaries, and by injection**: pass in a fake (a small class or function with the boundary's interface) rather than patching. `monkeypatch` is for boundaries that can't be injected (environment variables, `builtins.input`), never for the package's own modules: a test that patches internals breaks on a refactor that keeps behaviour.
+- **A callable that crosses a process pool lives in the package**, not in the test module. Under the `spawn` start method (the default on macOS and Windows) workers re-import it by module path, and `tests` isn't importable from them, so a fake defined in a test fails with `ModuleNotFoundError: tests`. Pass a real callable from the package, keep pool-crossing fakes in a small helper module in the package, or test with one worker and cover parallel = serial with a package callable.
 - **Randomness is a parameter**: code takes a `random.Random` (or a seed) instead of using the module-level `random`, so a test passes a seeded instance and the run is reproducible.
 
 ## pre-commit
