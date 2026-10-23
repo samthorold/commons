@@ -91,6 +91,15 @@ When domain relationships are being discussed, stress-test them with specific sc
 
 The project's Archetype Guide (e.g. for discrete event simulation), where there is one, says how systems of this shape are generally approached, whatever the Stack. When the design departs from one of its Stances, say so: "The Guide's Stance is X; you're proposing Y — is this a Deviation?" A departure the owner keeps is recorded as a Deviation, with its reason, in the repo's `CLAUDE.md`. If the project's cell has no Archetype Guide yet, a decision another project of the same shape would face is a Gap (`~/.claude/commons/CONTEXT.md`, *Recognising a Lesson*).
 
+### Challenge against the end state
+
+The design states its end state as hypotheses (the Project knowledge Guide's Stance; format in [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md)). Start from the register's Due rows, not from the last result. Then, as the session goes:
+
+- A new mechanism: "Which part of the end state does this serve?" One that serves none is there for a local reason.
+- A new hypothesis: what's its source, its test, its reading rule (supported, refuted, undecided, with the error) and its review interval? One with no source is a candidate to drop.
+- A changed threshold, panel or instrument: is the design changing with it? If not, it's Drift. Say so: "That moves the line after the reading — what in the design changed?"
+- A design with no end state yet: the session that writes one starts from what the design already maps (phenomena to mechanisms, features to components), takes hypotheses and ranges from the domain, and leaves every register row Due.
+
 ### Cross-reference with code
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"

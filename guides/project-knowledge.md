@@ -32,7 +32,7 @@
 
 - **Stance:** a system-design doc states each load-bearing mechanism as it is today, why it has that shape (the domain fact or constraint that forces it), and why the obvious alternative fails, as a standing property of the design.
 - **Why:** a newcomer, human or agent, should understand from the doc alone both what the design is and why it must be so, without asking "why didn't they just…?". An agent that doesn't know why a shape is load-bearing will simplify it away.
-- **How to apply:** no chronology, no "considered options" log, no status or dates. A rejected feature request that is worth remembering goes here, as part of why the design has its shape (the issue is closed as *not planned*). Parameter values belong with the code, not here.
+- **How to apply:** no chronology, no "considered options" log, no status or dates. A rejected feature request that is worth remembering goes here, as part of why the design has its shape (the issue is closed as *not planned*). Parameter values belong with the code, not here. A reading rule's declared values (its range, panel, review interval) are not parameters: they belong with the rule, in the design.
 - **What would change our mind:** design docs that grow so long agents stop reading them; then split by area, but keep the present tense.
 
 ## Stance: the system design states its end state as hypotheses
