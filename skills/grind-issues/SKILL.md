@@ -158,8 +158,12 @@ the Guide's Stance "decide, record, carry on".
 
    then: gh pr create --title "<short title>" --body-file <path to pr-body-[NUMBER].md>
 
-5. Don't spawn agents of your own, and don't leave anything running in
-   the background: report back only once all your work has stopped.
+5. Don't spawn agents of your own, and report back only once all your
+   work has stopped. A run longer than the foreground time limit goes in
+   the background; wait for its completion before reporting, never hand
+   back while it runs. Name every file you write outside your worktree
+   (scripts, notes, the PR body) after this issue, or keep it in a
+   `[NUMBER]/` subdirectory of the scratchpad: other agents share it.
 
 6. Report back: what you implemented, the PR number, and any problems.
    Also report anything that looked like a Lesson (the four Signals in
