@@ -32,7 +32,9 @@
 - **Each brief carries the workflow rules above**, conflict resolution included. A sub-agent sees only its brief and the Imported Guides, not the conversation that launched it.
 - **Ignore the worktrees directory** (e.g. `.claude/worktrees/`) in `.gitignore`, so a `git add -A` in the primary checkout can't stage the worktrees as embedded repositories.
 - **Each worktree builds its own environment** (virtualenv, compiled artefacts), from shared caches. On a small machine, cap build and test parallelism per agent so several agents fit at once.
-- **Slices that touch the same files** (lock files, a shared results document, a CLI entry point) are fine to run in parallel: the later PR merges `main` in and resolves. Sequence them only when one slice's design depends on another's outcome.
+- **Slices that touch the same files** (lock files, a shared results document, a CLI entry point) are fine to run in parallel: the later PR merges `main` in and resolves. Sequence them only when one slice's design depends on another's outcome, or when both regenerate a file that can't be merged hunk by hunk, only generated again (an Archetype's Guide names such files, e.g. recorded model runs).
+- **A PR holds the change its slice asked for.** When a delegated slice comes back needing more, a fix to what it was asked goes back to it on the same PR; anything further is its own slice, even when the same agent does it, and what is done and sound merges first. *Why:* each extra change sent back on the same PR makes it harder to review and its outcome harder to attribute, and a send-back is the orchestrator's easiest move.
+- **A sub-agent drafts follow-up issues and reports them; whoever launched it opens them**, as with Lessons (Global Guide, *Lessons*). *Why:* a follow-up an agent decides on is recorded where the next reader looks (*decide, record, carry on*), but a sub-agent's permissions may not reach the tracker, and parallel agents would open duplicates.
 
 ## Idle sweeps
 

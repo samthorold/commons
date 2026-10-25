@@ -11,5 +11,6 @@ One line per Guide: its Scope (Stack × Archetype). Your Guides are those whose 
 | [Rust](guides/rust.md) | Rust, and the crate in Python+Rust | any |
 | [Emergent systems](guides/emergent-systems.md) | any | emergent systems: behaviour that can't be derived from the actors' rules, only observed by running them |
 | [Web apps](guides/web-apps.md) | any | web apps: used through a browser, served by the project |
+| [Model calls](guides/model-calls.md) | any | apps whose acts call a language model: behaviour that comes from the model's judgement, observed by running it |
 
-**Known Gaps** (no Guide yet): none. Lessons in these areas still go to `lessons/`, addressed to the missing Guide.
+**Known Gaps** (no Guide yet): the Go Stack. Lessons in these areas still go to `lessons/`, addressed to the missing Guide.

@@ -47,7 +47,7 @@ Include these in every sub-agent prompt under a `## How to run tests` header.
 Read every issue on the worklist, then decide which can run together:
 
 - **Sequence an issue after another** when its design depends on the other's outcome: it says it's blocked by it, extends what the other introduces, or would be designed differently once the other lands.
-- **Otherwise run it in parallel.** Touching the same files (lock files, a shared results document, a CLI entry point) is not a reason to sequence: the later PR merges `main` in and resolves, as the Guide says.
+- **Otherwise run it in parallel.** Touching the same files (lock files, a shared results document, a CLI entry point) is not a reason to sequence: the later PR merges `main` in and resolves, as the Guide says. The exception is files that can only be generated again, not merged (recorded model runs, under the Model calls Guide): issues that regenerate the same ones run in sequence.
 - **Cap how many run at once** by what the machine can hold: each worktree builds its own environment, and the full test run's duration from Test Discovery is a guide to how heavy each agent is. When unsure, start with two or three.
 
 Tell the user the plan in a line or two (what runs first, what waits for what). Within those constraints, start issues in worklist order — ID order, unless the user reordered them or supplied their own list. One issue at a time is still a valid plan when everything depends on everything.
@@ -65,6 +65,8 @@ Mark this issue's task `in_progress` via `TaskUpdate`. Then read the issue body 
 - **Unclear**: not enough detail to implement. → Post a comment saying what design is missing; move the issue from `ready` to `needs-design`; mark the task `completed` (it's been processed), move to next issue. Issues sequenced after it may need re-planning.
 
 **If the Adopter keeps a register** (the Project knowledge Guide's end-state Stance), list the hypotheses an actionable issue will make Due: those whose Due mechanisms it touches, by the design's own rule. Split them by cost. **Cheap** ones are read by the full test command (the one run before committing). **Expensive** ones need anything beyond it: slow lanes, multi-seed instruments. The cheap ones go into the sub-agent's brief; the expensive ones are for the completion report. Nobody in the run defers or reads an expensive one: whether to read it now, defer it or revise the design is the owner's review, because a change deciding to defer the readings it made Due is the decision most open to Drift.
+
+**If the issue re-records model runs** (the Model calls Guide), its brief carries a budget: which recordings, the retries per fixture, the rule for telling flake from regression, and the most it may spend. A run on an expensive model needs the owner's say before it is briefed. An issue whose criterion is to re-record "once the instructions settle" is **Unclear**: it needs splitting into a slice the owner accepts the behaviour of and a slice that records, as that Guide says.
 
 ### Step 2 — Delegate to sub-agent
 
@@ -103,6 +105,15 @@ PR. If one fails under its reading rule, don't change the rule or the
 test to make it pass: report it.
 Expensive: [LIST, or "none"]. Don't run them and don't defer them; the
 orchestrator reports them for the owner's review.]
+
+[IF THE ISSUE RE-RECORDS MODEL RUNS:
+## Re-recording budget
+
+Recordings: [WHICH]. Retries per fixture: [N]. Spend at most [AMOUNT].
+The same fixture failing the same check on every try is a regression:
+stop and report it, don't change the check. Different fixtures failing
+on different tries is flake: retry within the budget. Record nothing
+outside the list, and no run on [EXPENSIVE MODELS].]
 
 ## How to work
 
@@ -167,7 +178,12 @@ the Guide's Stance "decide, record, carry on".
    (scripts, notes, the PR body) after this issue, or keep it in a
    `[NUMBER]/` subdirectory of the scratchpad: other agents share it.
 
-6. Report back: what you implemented, the PR number, and any problems.
+6. Don't open issues. Draft each follow-up issue you decide on (its
+   full body, in the Global Guide's slice shape) to
+   `followups-[NUMBER].md` in the scratchpad, and report it; the
+   orchestrator opens it.
+
+7. Report back: what you implemented, the PR number, and any problems.
    Also report anything that looked like a Lesson (the four Signals in
    ~/.claude/commons/CONTEXT.md, "Recognising a Lesson"); as a
    sub-agent you report it, you don't record it (Global Guide,
@@ -197,6 +213,10 @@ Run each as its own call, from the primary checkout. Never merge with failing or
 
 After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as the Guide says, then merge once it's green.
 
+**A PR that comes back needing more goes back only for a fix to what its issue asked** (the Agentic development Guide, *a PR holds the change its slice asked for*). Anything further, merge what is sound and open a new issue for the rest; don't grow the PR by sending it back.
+
+**Open the follow-up issues sub-agents drafted** (`followups-[NUMBER].md`), after checking that each isn't a duplicate of an open issue.
+
 Record the outcome: issue number, PR number, status. Once an issue is merged, start any issue that was waiting on it.
 
 ### Step 4 — Update worklist and advance
@@ -223,4 +243,5 @@ When all issues have been processed, report a summary:
 - **Check before implementing.** If the issue looks already resolved, verify before closing.
 - **Respect the domain.** Use vocabulary from CONTEXT.md and honor the documented system design.
 - **No context bleed.** Each sub-agent prompt must be self-contained.
-- **Stick to the worklist.** Only work on issues that have a task created during startup. Never add or substitute issues mid-run.
+- **Stick to the worklist.** Only work on issues that have a task created during startup. Never add or substitute issues mid-run. Follow-ups opened during the run wait for the next one.
+- **No growing send-backs.** A PR goes back to its sub-agent for a conflict or a fix to its own issue, never for a further change.

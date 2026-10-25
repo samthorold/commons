@@ -79,7 +79,7 @@ How web apps carry out the Agentic development Guide's test-first Stance. The bo
 
 - **The hypermedia API is the public interface.** End-to-end tests build the app through its constructor (*twelve-factor*, above) with the adapters they want, and drive it the way a browser does, through the framework's test client: status codes, redirects, headers and the returned HTML. Domain logic and use cases are tested directly, without HTTP.
 - **Replace only boundaries, by injection.** A fake stands in for what the app doesn't own (a third-party API, the clock) and is passed in through the constructor; nothing is patched, and the app's own layers are never mocked.
-- **Time is a parameter.** The domain never reads the clock: use cases are told the time, handlers pass the current time, and tests pass the times they need.
+- **Time is a parameter.** The domain never reads the clock: use cases are told the time, handlers pass the current time, and tests pass the times they need. Waiting is time too: code that waits (backoff, a rate limit, an in-process timetable) takes its sleep and its ticks as parameters (a `sleep(ctx, d)` function, a channel of ticks), so a test neither really sleeps nor races on cancellation.
 
 ## Lessons
 
