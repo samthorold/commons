@@ -1,9 +1,11 @@
 ---
 address: guides/model-calls.md#stance-three-tiers-and-the-suite-never-pays-for-a-call
-origin: samthorold/go-slow#116
+origin: samthorold/go-slow#119
 signal: gap
 ---
 
-A recorded property that a case is "drawn as X" fails in two different ways: the case is drawn as something else (classification), or it isn't drawn at all (selection). A change to how an act classifies its outputs shouldn't be refuted by its selection, which it didn't change. In the case, a property asserting that a declared intention was drawn as the reportable category held in only 3 of 5 samples, on two recordings. In every failing sample the intention was simply left out, as it had been before the change, so the regression rule stopped a run over behaviour the slice never touched.
+A recorded property that a case is "drawn as X" fails in two different ways: the case is drawn as something else (classification), or it isn't drawn at all (selection). Name which one a property tests. And a change to classification still needs a selection property, because it moves selection too.
 
-How it would apply: a property names which it tests. A classification property reads "when drawn, it is X, never Y". A selection property ("it is drawn") is its own claim, asserted only by a change to what the act selects, and judged with its own rule.
+The case: an act sorts what it draws from a document into two categories, and a change widened the reportable one (declared intentions now counted). A property that one intention is drawn as reportable held in 3 of 5 samples, failing only where the intention was left out. So it was narrowed to classification ("when drawn, it is X"), on the grounds that the change hadn't touched selection. It had. On another fixture, a government's reaction to an agreement, the newly reportable intentions crowded out what the act used to draw. The reaction itself had been drawn in 5 of 5 samples and was now drawn in 1, and so was the agreement it reacted to. No property noticed. The loss surfaced only when a downstream act's test stopped for lack of the reaction.
+
+How it would apply: a change that widens or narrows a category in an act's instructions is checked for selection on every fixture, by comparing what each fixture's samples draw before and after the change, before the change is accepted. A classification property ("when drawn, it is X, never Y") goes beside a selection property, not in place of it.
