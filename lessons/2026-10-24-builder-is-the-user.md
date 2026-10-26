@@ -2,6 +2,7 @@
 address: guides/project-knowledge.md#stance-the-system-design-states-its-end-state-as-hypotheses
 origin: samthorold/go-slow#8
 signal: gap
+waiting: a second Adopter whose user is its builder, or this Adopter's first quiet-window reading
 ---
 
 When an Adopter's only user is also its builder, two things about its end state are worth stating generally.
