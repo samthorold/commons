@@ -211,6 +211,8 @@ git pull
 
 Run each as its own call, from the primary checkout. Never merge with failing or pending checks.
 
+Then clean up after the agent (the Agentic development Guide, *Agents in parallel*): remove its worktree and delete the branches left for it, the harness's and the work branch, once the merge has landed. Do the same for an issue whose agent stopped without a PR, once its work is abandoned or saved elsewhere.
+
 **Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported. This wait is per PR: meanwhile, carry on assessing, launching and merging other issues.
 
 **Check the PR's closing references** before merging (see the Guide's trap on closing keywords): `gh pr view <PR-NUMBER> --json closingIssuesReferences --jq '[.closingIssuesReferences[].number]'` should list only the issue being worked. If it lists others, edit the PR body (`gh pr edit <PR-NUMBER> --body-file <file>`) to reword them before merging.
