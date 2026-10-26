@@ -14,3 +14,5 @@ Two checks cover the gap between refreshes, neither needing a recording of its o
 - **A model-free compatibility check.** Each act's current recordings are fed to the acts downstream with a fake model, so a change in the shape of an upstream output fails at once. A change in what the upstream act judges is not a code failure, and is brought downstream by a refresh.
 
 A frozen copy is part of the downstream act's request, so it belongs in the request hash.
+
+A frozen copy is loaded as it was kept, not passed through the upstream act's current checks (origin: samthorold/go-slow#87). If it goes through them, a slice that adds a new check to the upstream act refuses the downstream act's frozen inputs too, so one change fails acts it never touched. The copies were checked by the act that made them, when they were made.
