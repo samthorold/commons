@@ -2,6 +2,7 @@
 address: guides/web-apps.md
 origin: samthorold/go-slow#73
 signal: gap
+waiting: a second Adopter that collects from third-party sources, or a Guide for collecting them
 ---
 
 A collector that fetches a feed conditionally (ETag / Last-Modified) and then fetches each new entry's detail must not save the feed's validators for a run in which any entry was skipped because its detail fetch failed. Otherwise the next run gets a 304, and the skipped entries are never seen again.
