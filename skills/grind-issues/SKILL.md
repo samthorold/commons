@@ -122,8 +122,12 @@ You are in your own git worktree. Follow the Agentic development Guide
 up with main by merging it, never rebasing; resolve conflicts hunk by
 hunk, and after resolving one in prose, check that `git diff origin/main
 -- <file>` removes or changes none of main's headings; and before
-pushing, check that `git diff origin/main --stat` lists only this
-issue's changes.
+pushing, run `git fetch origin` and merge `origin/main`, then check
+that `git diff origin/main --stat` lists only this issue's changes
+(other agents' fetches move `origin/main`, so a stale merge shows
+their work as deletions in yours). A `git fetch` that fails on a ref
+lock, or a tool that refuses to start because another instance is
+running, is another agent: retry it.
 
 Run one shell command per call: no `cd <dir> && …`, chains, pipes into
 an interpreter or heredocs. In a worktree a compound command is refused
