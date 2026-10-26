@@ -7,6 +7,7 @@ Lessons waiting for Promotion. One file per Lesson, named `YYYY-MM-DD-<slug>.md`
 address: guides/python.md#tooling   # the narrowest Guide (and Stance/Convention) it's about; a missing Guide is fine
 origin: samthorold/<repo>@<commit-or-PR>   # the evidence; may be a private repo
 signal: contradiction | deviation | gap | trap
+waiting: <condition>   # optional, added by a Sweep: what Promotion waits on
 ---
 
 <the claim: what seems to be true, and why>
@@ -21,7 +22,7 @@ Nothing loads this directory by default, and agents shouldn't rely on it while w
 ## When Promotion happens
 
 - **On touch**: before writing or revising a Guide or Skill, read every Lesson whose `address` is it (`grep -l "address: guides/<guide>" lessons/*.md`), and resolve them in the same piece of work. Also search the Adopters' own docs for Local knowledge about it that was never recorded as a Lesson, e.g. known traps mentioning the Skill (`grep -rli "<name>" ~/Projects/*/CLAUDE.md ~/Projects/*/docs`), and promote what passes the filter. Once the general part is in the Commons, the Adopter's own copy can be cut down to what's specific to it (in that Adopter's own workflow, e.g. its next PR touching those docs).
-- **Sweep**: a recurring review of the whole inbox, tracked as an issue in the private portfolio repo. Idle sweeps (Agentic development Guide) report findings on that issue between sweeps; the sweep starts from them. Several Lessons with the same Address are the strongest case for acting. The sweep also reviews every Known trap (in the Guides and the dotfiles `CLAUDE.md`): is its *remove when* met, and can it move up the ladder in `CONTEXT.md`?
+- **Sweep**: a recurring review of the whole inbox, run by the owner when they choose with the `sweep` Skill, and tracked as an issue in the private portfolio repo. Idle sweeps (Agentic development Guide) report findings on that issue between sweeps; the sweep starts from them. Several Lessons with the same Address are the strongest case for acting. The sweep also reviews every Known trap (in the Guides and the dotfiles `CLAUDE.md`): is its *remove when* met, and can it move up the ladder in `CONTEXT.md`?
 
 ## Promotion
 
