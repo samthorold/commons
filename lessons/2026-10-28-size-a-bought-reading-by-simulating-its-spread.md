@@ -1,0 +1,7 @@
+---
+address: guides/ventures.md
+origin: a private venture repo, the first attempt's proof hypotheses and the research note sizing its cohorts
+signal: gap
+---
+
+When a venture's hypothesis is read on a sample it has to buy (players bought through paid acquisition, test customers, trial users), each reading's declared size is a spend, and the owner's first instinct is to size it by what they are willing to lose. That sizes the loss, not the reading: too small a sample leaves every reading undecided, and the money buys nothing. What worked was to size the reading first, by simulating it: draw samples from the outcome's distribution, read each with the declared rule (interval from the sample's own spread), and tabulate, by sample size and cost, how often a clear hit reads supported and a clear miss reads refuted. Industry benchmarks give means, almost never variances, so the spread is bracketed (here from a single concentration figure, "the top 20% give 80%") and the table shows the size across the bracket. The owner then sets a planned budget from the table, as a plan rather than a limit: any further spend is a fresh reading, declared before it is bought, never a top-up of one in progress. Two findings another venture would also hit: under skewed outcomes, an interval from the sample's own spread under-covers, so a skew-corrected bootstrap belongs in the rule; and a reading near the break-even line stays undecided at any affordable size, so the rule needs an undecided band and a fresh-sample rule rather than a larger sample.
