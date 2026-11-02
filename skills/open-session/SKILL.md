@@ -11,12 +11,13 @@ The concepts are what's being worked out, so don't walk a decision tree: splitti
 - **Play back where the concepts stand every few exchanges**, not after every one: what's now settled as a working concept, what's in tension, what's open. The playback is what keeps the session and its output usable.
 - **No fixed agenda.** The owner picks where to go next. You may suggest a direction, loosely.
 - **Ask only what needs the owner.** Answer from the Commons, the repo's docs and the sources whatever you can answer confidently, and say what you answered. Light recommendations are fine where many concepts are in play; a question that invites acceptance without engagement is not.
+- **When the owner asks for your judgement, give it whole**: one argued position, its evidence, where it is weakest, ending in a single candidate. A loose acceptance of it ("most of that makes sense") settles that candidate: record it as settled and play it back, don't ask about it again.
 - **Test concepts against real cases**, across projects, and against research already done, read rather than recalled. Cases produced under the flaws being addressed show where a concept is missing, not what it should be.
 - **Your attempts get rejected, and that is the work.** A reformulation the owner calls wordplay is dropped and recorded as dropped.
 - **Settled vocabulary goes in when it's settled.** A term the owner agrees can go into `CONTEXT.md` (the repo's, or the Commons') during the session; everything else waits for the end.
 
 ## Ending
 
-Stop at a natural pause. Fold the running list into the issue the session is about (or a new one): working concepts, numbered, each with the cases it was tested against; open items; candidates for further research. Working concepts are not Stances: they go into a Guide or a system design only when a later session or the owner settles them.
+Stop at a natural pause. Fold the running list into the issue the session is about (or a new one): working concepts, numbered, each with the cases it was tested against; open items; candidates for further research. A project with no tracker yet gets a working note in its docs instead, marked unsettled (and naming what it supersedes), with its next steps in order, to become issues once a tracker exists, rather than in a tracker meant for cross-project work. Working concepts are not Stances: they go into a Guide or a system design only when a later session or the owner settles them.
 
 Then a Lesson pass (Global Guide, *Lessons*).
