@@ -9,6 +9,8 @@ Interview me relentlessly about every aspect of this plan until we reach a share
 
 Ask only what needs me. A question you can answer confidently from the Commons, the repo's docs or the domain's sources, answer it yourself, write it where it belongs, say so, and carry on. For each question you do ask, give a light recommendation. If the questions keep getting reshaped instead of answered, the concepts themselves are in question: switch to `/open-session`.
 
+Walk only the branches the first slices depend on, above all on a build that hasn't started. A later question a slice can settle with the facts it checks is left to that slice: say so, and hand over to slicing rather than grilling on.
+
 Ask the questions one at a time, waiting for feedback on each question before continuing.
 
 If a question can be answered by exploring the codebase, explore the codebase instead.
