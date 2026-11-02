@@ -2,7 +2,7 @@
 
 **Scope:** every Stack, every Archetype.
 
-Conventions used only when setting up a repo or changing its settings, CI or hooks live in their own files under `~/.claude/commons/guides/global/`, and each section says when to read its file. Links are relative to this file.
+Conventions used only for one job (setting up a repo, changing its settings, CI or hooks, writing files that are checked back) live in their own files under `~/.claude/commons/guides/global/`, and each section says when to read its file. Links are relative to this file.
 
 ## GitHub repo settings and branch protection
 
@@ -11,7 +11,7 @@ Conventions used only when setting up a repo or changing its settings, CI or hoo
 ## Checks and CI
 
 - **When setting up a repo's checks or CI, or changing its pre-commit hooks or workflows, read [checks and CI](global/checks-and-ci.md).** It decides that the checks are the pre-commit hooks, which ones every repo has, and that CI is one `pre-commit` job running exactly them; the Stack's Guide completes it.
-- **Files a program writes and checks back are written as the hooks would leave them** (recorded fixtures, generated files: ending in a newline, no trailing whitespace). *Why:* otherwise a hook rewrites the file on commit, and anything that hashes it, compares it byte for byte or checks it is unchanged breaks. Fix the writer; excluding the files from the hooks is the fallback.
+- **When writing a program that writes files it, or a test, later checks back (recorded fixtures, generated files, snapshots), read [written files](global/written-files.md).** It decides that such files are written as the hooks would leave them.
 
 ## Issues
 

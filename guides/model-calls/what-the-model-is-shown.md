@@ -2,7 +2,11 @@
 
 How to apply the Stance *everything the model is shown is part of its instructions*, from [the Model calls Guide](../model-calls.md#stance-everything-the-model-is-shown-is-part-of-its-instructions), which states the Stance.
 
-**Why, in full:** a model takes everything in its context as guidance. Text added for one feature shifts its judgement on every input, and so does text taken away, on properties with no apparent bearing on it: that is editing the instructions by another route, and nothing in the instructions' diff shows it. The mirror holds too: a check the model isn't shown is a standard it can't meet, so it fails it the same way on every try, and in use the work fails every attempt.
+## Why, in full
+
+A model takes everything in its context as guidance. Text added for one feature shifts its judgement on every input, and so does text taken away, on properties with no apparent bearing on it: that is editing the instructions by another route, and nothing in the instructions' diff shows it. The mirror holds too: a check the model isn't shown is a standard it can't meet, so it fails it the same way on every try, and in use the work fails every attempt.
+
+## How to apply
 
 Shared code that builds what an act is shown is one of the Guide's Known traps (*what shared code builds for an act is its input*).
 

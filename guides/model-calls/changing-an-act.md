@@ -2,7 +2,11 @@
 
 How to apply the Stance *change an act on its cheapest stage, then record the chain once*, from [the Model calls Guide](../model-calls.md#stance-change-an-act-on-its-cheapest-stage-then-record-the-chain-once), which states the Stance.
 
-**Why, in full:** re-recording cascades. A change to one act makes every downstream act's recordings stale, so its real cost is the whole chain's. Problems in a changed act are visible in its own output, and re-recording the chain for each fix pays the cascade every time.
+## Why, in full
+
+Re-recording cascades. A change to one act makes every downstream act's recordings stale, so its real cost is the whole chain's. Problems in a changed act are visible in its own output, and re-recording the chain for each fix pays the cascade every time.
+
+## How to apply
 
 How each act is recorded over frozen copies of what it rests on, and the checks that cover the gap until a refresh, are in [recording](recording.md).
 

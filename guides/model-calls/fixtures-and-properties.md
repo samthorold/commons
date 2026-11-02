@@ -2,7 +2,11 @@
 
 How to apply the Stance *three tiers, and the suite never pays for a call*, from [the Model calls Guide](../model-calls.md#stance-three-tiers-and-the-suite-never-pays-for-a-call), which states the Stance.
 
-**Why, in full:** a suite that calls a model is slow, costs money on every run and isn't deterministic, so it stops being run. A suite that only fakes the model never sees what a real one does with the instructions. Asserting exact text breaks on every re-recording without saying anything about whether the act works.
+## Why, in full
+
+A suite that calls a model is slow, costs money on every run and isn't deterministic, so it stops being run. A suite that only fakes the model never sees what a real one does with the instructions. Asserting exact text breaks on every re-recording without saying anything about whether the act works.
+
+## How to apply
 
 - Fixtures are material the repo may hold. Material the app may read but not store or redistribute can't be a committed fixture.
 - Make fixtures by the production path (the same collection, the same truncation), or check that they match it. A fixture richer than what production collects lets a property pass on input the model is never given in use, and nothing fails to say so.

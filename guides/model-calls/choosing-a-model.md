@@ -2,7 +2,11 @@
 
 How to apply the Stance *models sit behind a port, and are chosen by measurement*, from [the Model calls Guide](../model-calls.md#stance-models-sit-behind-a-port-and-are-chosen-by-measurement), which states the Stance.
 
-**Why, in full:** models change faster than the app: new versions ship, prices move, and one act's best model isn't another's. An act that knows its provider can't be measured against another one. The agent advising on the choice is itself one vendor's model, and a vendor-specific skill may supply that vendor's prices and defaults. Its framing then drifts toward that vendor (comparisons within one line-up, recalled terms presented as fact), and nothing in the conversation corrects it.
+## Why, in full
+
+Models change faster than the app: new versions ship, prices move, and one act's best model isn't another's. An act that knows its provider can't be measured against another one. The agent advising on the choice is itself one vendor's model, and a vendor-specific skill may supply that vendor's prices and defaults. Its framing then drifts toward that vendor (comparisons within one line-up, recalled terms presented as fact), and nothing in the conversation corrects it.
+
+## How to apply
 
 - Research the options from sources (Project knowledge Guide, *domain claims come from sources*), with a brief that names no vendor and asks for even-handedness, and put several vendors on the shortlist, open-weight and closed. One adapter is fine while measurement favours one provider: the port is what keeps the choice open. Pin the model version an act runs on, so a provider's silent upgrade can't change behaviour between two readings.
 - **Pin the request, not only the model.** Set every option that changes what the act does or costs (thinking on or off, its effort) explicitly, chosen by measurement like the model: a request that relies on the provider's defaults changes when they do. Size the output bound from the usage the provider reports, thinking included, not from the visible answer: on a model that thinks by default, thinking can fill most of the bound and cut off long inputs while the answer looks short.

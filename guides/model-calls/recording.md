@@ -2,7 +2,11 @@
 
 How to apply the Stance *a recording answers exactly one request*, from [the Model calls Guide](../model-calls.md#stance-a-recording-answers-exactly-one-request), which states the Stance.
 
-**Why, in full:** a replay that doesn't compare the request the code would send now stays green after the instructions, schema or model change, testing a prompt that no longer exists. And a sample is only a sample of the act if it answers the same request as the others: one drawn over a different prior state, or lost to the provider, measures something else.
+## Why, in full
+
+A replay that doesn't compare the request the code would send now stays green after the instructions, schema or model change, testing a prompt that no longer exists. And a sample is only a sample of the act if it answers the same request as the others: one drawn over a different prior state, or lost to the provider, measures something else.
+
+## How to apply
 
 - Keep a hash of the request as sent (instructions, schema, input, model, and in a conversation the model's earlier turns in the form the provider returned them) with each recording, and keep in the recording whatever is needed to rebuild it. Fail the replay as stale on a mismatch. Fail, don't skip: a skipped property quietly tests nothing.
 - Acts that feed each other (one act's output is the next one's input) record in sequence and stop at the first failure. Otherwise one failed call moves every later call onto a request no recording holds.

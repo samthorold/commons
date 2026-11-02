@@ -2,7 +2,11 @@
 
 How to apply the Stance *an act is judged over its samples, in the suite*, from [the Model calls Guide](../model-calls.md#stance-an-act-is-judged-over-its-samples-in-the-suite), which states the Stance.
 
-**Why, in full:** a property passing on one sample says little about its pass rate: a recording that happened to pass hides a flaky property until the next re-recording exposes it. A rate judged once at recording time is a claim in a PR body that nothing checks again; a later change to how a property is asserted quietly stops testing the samples it was measured on. Derived on every run, the status stays true of the code, as a register's does (Project knowledge Guide, end-state Stance). Pooled across fixtures, a rate hides a property that fails on one input.
+## Why, in full
+
+A property passing on one sample says little about its pass rate: a recording that happened to pass hides a flaky property until the next re-recording exposes it. A rate judged once at recording time is a claim in a PR body that nothing checks again; a later change to how a property is asserted quietly stops testing the samples it was measured on. Derived on every run, the status stays true of the code, as a register's does (Project knowledge Guide, end-state Stance). Pooled across fixtures, a rate hides a property that fails on one input.
+
+## How to apply
 
 - Declare N and each property's rule (supported, refuted, undecided, by count) before the samples are drawn, as reading rules are declared.
 - A sample is one piece of work run as it runs in use, with the act's retry budget. Passing the act's own checks is rated over all samples ("passes within its attempts": a refused try costs a retry, not a wrong output). A property only the suite asserts runs nowhere in use, so it is rated over the samples that passed their checks.
