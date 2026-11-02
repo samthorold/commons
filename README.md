@@ -2,6 +2,8 @@
 
 The shared approach behind my projects: Guides (Conventions and Stances per Stack and Archetype), Skills (Procedures), and Lessons waiting to be promoted. Its point is to define how projects are worked on, well enough that agents can act on their own: the instructions and the harness are meant to be sufficient, and where an agent has to stop and ask, that is a gap in them to fix, not a gate to keep. The vocabulary is in [`CONTEXT.md`](CONTEXT.md); the list of Guides is in [`MAP.md`](MAP.md).
 
+It keeps projects on track over time, not at every moment. Drift is expected: an agent skips a detail file, or an Adopter falls behind a Revision. Sweeps catch it before it goes far, both the scheduled sweep and the idle ones agents run while they wait, and Lessons carry back what the Guides missed. Preventing every Drift up front would cost what the Commons is for: agents acting on their own, changes made quickly, and contexts small enough to work in. So a rule earns a place in every session's context only where catching its breach later costs more than loading it every time.
+
 ## How the repos fit together
 
 | Repo | Visibility | Job |
