@@ -2,11 +2,13 @@
 
 **Scope:** every Stack, every Archetype. The topic is where an Adopter keeps what it knows: its language, its domain, its design and its code, and what never gets written down separately.
 
+Each Stance's *How to apply*, and the Conventions and Known traps for research, live in files under `~/.claude/commons/guides/project-knowledge/`, and each section says when to read its file. Links are relative to this file.
+
 ## Stance: durable knowledge goes in source control, not private memory
 
 - **Stance:** anything worth remembering across sessions (workflow, runtimes, known traps, vision, how to work on the project) goes in the repo's `CLAUDE.md` or the docs it points to, never only in an agent's auto-memory. Knowledge that would hold for other projects goes to the Commons as a Lesson, not only into the project's own docs.
 - **Why:** private memory isn't committed, reviewed or visible, and drifts out of date unseen.
-- **How to apply:** update the docs instead of writing a memory file. A handoff document (the `handoff` Skill) is transient by design: before writing one, make sure anything durable is already in a commit, a doc or an issue.
+- **How to apply:** before writing a memory file or a handoff document, read [durable knowledge](project-knowledge/durable-knowledge.md).
 - **What would change our mind:** a harness whose memory is versioned and reviewable like the repo.
 
 ## Stance: three layers, written in one language
@@ -17,70 +19,42 @@
   - **Implementation**: the code. There is no documentation layer for it: if a fact lives in the code, the code is its home.
 
   Underneath all three is the **ubiquitous language**, `CONTEXT.md` (or a `CONTEXT-MAP.md` pointing to one per context): what terms mean, with no design, implementation or decisions in it.
-- **Why:** each layer changes for a different reason (the world is understood better; the model changes; the code is refactored), so mixing them makes every change touch everything. A shared language keeps the layers, the issues, the tests and the conversation saying the same thing.
-- **How to apply:** work at one layer at a time, and write each fact once, at its layer, referencing the others rather than restating them. Create files lazily, only when there is something to write, and conform to the layout a repo already has. The `grill-with-docs` Skill is the Procedure that writes these layers; its `CONTEXT-FORMAT.md` and `SYSTEM-DESIGN-FORMAT.md` are the formats.
+- **Why:** each layer changes for a different reason, so mixing them makes every change touch everything.
+- **How to apply:** before writing to an Adopter's `CONTEXT.md` or docs, or creating a docs file, read [three layers](project-knowledge/three-layers.md).
 - **What would change our mind:** a project with no domain beyond the software itself (a pure tool), where the domain layer stays empty; that's expected, not a Deviation.
 
 ## Stance: there is no decision-record layer
 
 - **Stance:** no ADRs, decision logs or "we chose X over Y" files, and no decisions recorded in issues as the design's home. The *why* of the design lives in the system-design docs, in the present tense.
-- **Why:** a decision record is a chronology; to understand today's design from it, a reader reconstructs a trail of superseded choices, and records drift from the design they describe. The chronology already exists in git and PR history (see the Agentic development Guide's *decide, record, carry on*).
-- **How to apply:** wanting to write "we decided X over Y because Z" signals that the system-design doc under-explains the present: fold the reason, including why Y fails, into the doc. When the design changes, rewrite the doc to describe the new present.
+- **Why:** a decision record is a chronology, from which a reader has to reconstruct today's design out of superseded choices.
+- **How to apply:** when about to write "we decided X over Y", or when the design changes, read [no decision records](project-knowledge/no-decision-records.md).
 - **What would change our mind:** a decision that has to be audited as of a date (a regulatory or contractual record), which a present-tense doc can't serve.
 
 ## Stance: system design justifies itself
 
 - **Stance:** a system-design doc states each load-bearing mechanism as it is today, why it has that shape (the domain fact or constraint that forces it), and why the obvious alternative fails, as a standing property of the design.
-- **Why:** a newcomer, human or agent, should understand from the doc alone both what the design is and why it must be so, without asking "why didn't they just…?". An agent that doesn't know why a shape is load-bearing will simplify it away.
-- **How to apply:** no chronology, no "considered options" log, no status or dates. A rejected feature request that is worth remembering goes here, as part of why the design has its shape (the issue is closed as *not planned*). Parameter values belong with the code, not here. A reading rule's declared values (its range, panel, review interval) are not parameters: they belong with the rule, in the design.
+- **Why:** an agent that doesn't know why a shape is load-bearing will simplify it away.
+- **How to apply:** before writing or revising a system-design doc, read [system design](project-knowledge/system-design.md).
 - **What would change our mind:** design docs that grow so long agents stop reading them; then split by area, but keep the present tense.
 
 ## Stance: the system design states its end state as hypotheses
 
 - **Stance:** the system design states the end state and the hypotheses each part of it rests on (vocabulary: `~/.claude/commons/CONTEXT.md`, *End states and hypotheses*). Each hypothesis has its own test, and its reading rule and review interval are stated beside it in the system design; the test implements the rule. Status lives in a register derived from readings, never in the design.
-- **Why:** an end state is never certain. A mature project then drifts into local optimisation, each step judged against the last result instead of against where the work is going. Declaring rules before the readings makes that Drift visible as a declared value that changed with no design change. Status kept in the design would turn the design into a chronology.
-- **How to apply:**
-  - Where the domain is sourced, a hypothesis is a domain phenomenon the model should reproduce, and its rule uses the domain's empirical range (supported inside it, refuted wholly outside, undecided if it straddles), citing the number rather than restating it. A threshold of our own is set only where the sources give none, and a hypothesis no source supports is a candidate to drop: unsourced hypotheses are the ones that drift.
-  - Tests stay in the suite whatever the status. A status holds only for the implementation it was read on.
-  - A refuted hypothesis changes the system design, and that change is how the end state is revised. Declared values change only together with such a change.
-  - A reading declares its size or its stopping rule before it runs, as part of its reading rule. A reading that leans one way without crossing its line is undecided: read again on fresh runs, judged alone, or use a sequential rule that keeps going until it crosses a declared bound. Adding runs to the same reading until it crosses the line is not a reading.
-  - A clause whose scope depends on a baseline ("on a case already below the baseline, …") states the rule alone, and the test or report computes which cases it covers. Cases named beside it are labelled as examples, never as the list: a list worked out by hand misses cases, and where one went out with the rule, the rule is what was declared.
-  - A reading rule says the window it reads over and the points it is read at (back-to-back windows from a stated start, the latest ended window giving the status). A register derived on every view keeps no memory of when it last read, and fixed points stand in for that memory. A rule read over the whole history ("refuted by any missed day") is refuted for good by one bad day.
-  - A derived register learns from outside that what a hypothesis was read on has changed: a running system can't see a change to its own code. Feed the change in (commit history through an admin command, marking the paths the design names), and name in the design any change made only through configuration (switching a model), which commits don't show.
-  - Between revisions, grain only gets finer. A hypothesis may be replaced by finer ones under the same part of the end state. A replacement that goes up a grain or sideways is a design change.
-  - A link means relevance, not sufficiency. Supported children don't make their parent supported: the parent is resolved only by its own test.
-  - Tests near the top are often cheap, coarse necessary conditions (e.g. "a game against a mock human ends in under ten minutes"). They can refute but not confirm, and they run on every change.
-  - A supported hypothesis doesn't move into the domain layer. Domain facts come from sources about the world.
+- **Why:** an end state is never certain, and without rules declared before the readings a project drifts into local optimisation, each step judged against the last result.
+- **How to apply:** before declaring, revising or reading a hypothesis (its reading rule, its test), or building the register or how it learns what changed, read [end state](project-knowledge/end-state.md).
 - **What would change our mind:** registers that can't stay derived, for instance expensive instruments whose stored outputs go stale. Or reviews that cost more than the Drift they catch.
 
 ## Stance: domain claims come from sources, not recall
 
 - **Stance:** every claim in the domain layer is grounded in sources first, cited, with a note of evidence quality: what was read in full, what only as an extract (a fetch tool's answer about a page, with the cited passages quoted, not the page read line by line) or an abstract, what was recalled rather than read, and what the sources leave open. Only then is it carried into the design.
 - **Why:** an agent's own reading of how the world works is fluent and often wrong, and a design built on it inherits the error with no trail back to check.
-- **How to apply:**
-  - Don't offer "my read" of the domain as a reason for a design choice. The categories a design offers (an enum of roles, kinds or statuses in a schema) are domain claims too: categories from recall carry their errors into every part built on them. Where the literature is silent, say so, and settle the gap by a reading set in advance across the range the domain allows.
-  - Check a claim against the source that governs what the design reads, not a neighbouring one: a vendor's raw export against its schema and its list of excluded fields, not the integration page that describes its dashboards.
-  - Note where the sources disagreed with recall: it is the one thing research adds over the model's weights, and nothing else will catch it.
-  - Brief research from the owner's question, not from a working hypothesis: the categories, candidate answers and framing collected so far stay out of the brief, and so does anything the briefer remembers (a rate added "as context"), or the research echoes them back as findings and can no longer say whether the framing was right. Delegated researchers, who see only the brief, are the most prone to this. Research that only confirms recall usually means a brief written from recall; the remedy is the brief, not skipping research.
-  - Where research replaces a document written from recall, no researcher or report writer sees that document. Once the report is written, the coordinator adds where the sources disagree with the document, and rewrites the document from the report.
-  - The brief names the kinds of source the question needs (forums for failures, filings for figures), and the note records any it couldn't reach as missing evidence, not negative, saying which way their absence biases the opinion.
+- **How to apply:** before writing a domain claim, or offering categories in a design (an enum of roles, kinds or statuses), read [domain claims](project-knowledge/domain-claims.md); before briefing research, read [research](project-knowledge/research.md).
 - **What would change our mind:** a domain the project defines itself (a game's rules), where the rules are the source.
 
 ## Research lands as an opinion and a signpost
 
-What lasts from research is the opinion, not a summary of the readings. A summary mostly repeats what an agent would recall anyway, and loaded into context it dilutes the Stances that carry the value. So research lands as a Stance or other opinion at its layer (domain findings in the domain docs, measurements and project-specific analysis in `docs/research/<issue>-<slug>.md`, design in system design through a grill), with a signpost to its grounding: the sources and the evidence notes the Stance above asks for.
-
-Research outputs (deep-research `research_notes/` and `reports/`, scratch runs) are working folders, not committed, and deleted once the opinion and its signpost have landed. The exception is a question that stays open across sessions: its outputs are committed beside the question, each pass labelled with how it was briefed, until a Stance exists to carry them.
-
-## Known traps
-
-How a research agent's web tools fail, so a brief can plan around them.
-
-- **Guessed URLs 404, and professional registers can't be fetched.** Official pages move and manuals get renamed, so a URL from recall often fails and wastes a researcher's limited calls: search first, and fetch what the search returns. Registers (of tax advisers, lawyers, accountants) refuse fetches or show results only after an interactive search, so a report that needs registrations confirmed hands the owner a list of registers to check in a browser. *Remove when:* registers offer a query a fetch can read (guessed URLs will keep failing).
-- **A fetch tool can return a PDF as unreadable binary**, and the researcher then reports the primary source unreadable and falls back to write-ups. Where the tool also saves the file, `pdftotext -layout <file> -` extracts it cleanly. A brief that expects PDFs (gazettes, rulings, government publications) says so. *Remove when:* the fetch tool returns a PDF's text.
-- **A fetch tool that summarises a page flattens its tables**, and the summary can give a cell to the wrong row. Before a figure from a table goes into a domain doc, have the tool quote the table's cells in order and read the row off that; a brief can ask for it up front. *Remove when:* the fetch tool returns tables with their structure.
-- **Forums are out of reach.** reddit.com refuses fetches and `site:reddit.com` searches return no threads, even when the brief names forums; the HN Algolia API (`hn.algolia.com/api/v1/search`) does reach developers' own posts. Expect forum evidence to be missing, and say so in the note. *Remove when:* fetches and searches reach forum threads.
+- **Before briefing or running research (researchers, a deep-research run, web fetches), or deciding what of its output to keep, read [research](project-knowledge/research.md).** It decides how a brief is written, that research lands as an opinion at its layer with a signpost to its sources while its working folders go uncommitted, and holds the Known traps of a research agent's web tools.
 
 ## Lessons
 
-If something in this Guide proves wrong or incomplete while you work, record a Lesson addressed to it, as described in `~/.claude/commons/lessons/README.md`.
+If something in this Guide proves wrong or incomplete while you work, record a Lesson addressed to it (to the Stance's detail file, where the Lesson is about how to apply it), as described in `~/.claude/commons/lessons/README.md`.
