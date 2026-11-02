@@ -5,9 +5,9 @@ Lessons waiting for Promotion. One file per Lesson, named `YYYY-MM-DD-<slug>.md`
 ```markdown
 ---
 address: guides/python.md#tooling   # the narrowest Guide (and Stance/Convention) it's about; a missing Guide is fine
-origin: samthorold/<repo>@<commit-or-PR>   # the evidence: where the claim is shown, when such a place exists; may be a private repo
+origin: samthorold/<repo>@<commit-or-PR>   # the evidence: where the claim is shown, when such a place exists; may be a private repo. A file that may be deleted: <repo>@<sha>:<path>
 signal: contradiction | deviation | gap | trap
-waiting: <condition>   # optional, added by a Sweep: what Promotion waits on
+waiting: <condition>   # optional: what Promotion waits on, set by the writer or a Sweep
 ---
 
 <the claim: what seems to be true, and why>
