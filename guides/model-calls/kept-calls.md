@@ -1,6 +1,8 @@
 # Model calls Guide: every call in use is kept, and a changed judge judges forward
 
-How to apply the Stance *every call in use is kept, and a changed judge judges forward*, from [the Model calls Guide](../model-calls.md#stance-every-call-in-use-is-kept-and-a-changed-judge-judges-forward), which states the Stance and why.
+How to apply the Stance *every call in use is kept, and a changed judge judges forward*, from [the Model calls Guide](../model-calls.md#stance-every-call-in-use-is-kept-and-a-changed-judge-judges-forward), which states the Stance.
+
+**Why, in full:** judgement is read in use (tier 3), and when feedback says an output is wrong, only the request as sent says why the act judged so: inputs assembled at run time (precedents, candidates drawn from the store as it stood) are reproduced by no commit. Re-judging the whole record on every change costs as much as the record is large, and it grows daily, for every instruction tried; judgements kept with their judge let every view say who judged what it shows, and let a change be tried without rewriting what is already in use.
 
 - Keep thinking, refusals and answers the act's checks refused, with the reason. Kept calls are a side record: no act is shown them, since an act shown its own earlier answers takes instructions by another route.
 - Hash a kept call's request as recordings hash theirs (*a recording answers exactly one request*), so "the same request" means one thing in use and in the suite, and a call that went wrong is already a fixture's input where its material is admissible.
