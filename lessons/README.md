@@ -38,3 +38,5 @@ Read the Lesson with its Guide side by side, follow the Origin to the evidence, 
 | **Split** (claims for different Guides, or only part ready) | The ready part, as one of the rows above. | Rewritten to the remainder, with its new Address and a line saying what went where, in the same commit. |
 
 The reason goes in the commit message.
+
+Where a Guide keeps each Stance's *How to apply* in a detail file (`guides/<guide>/<stance>.md`), a Promotion about how to apply a Stance lands in its detail file, and a new Stance gets a detail file and a line saying when to read it. Lessons can be addressed to a detail file, and the *On touch* grep for the Guide finds them.
