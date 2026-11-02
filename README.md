@@ -1,6 +1,6 @@
 # commons
 
-The shared approach behind my projects: Guides (Conventions and Stances per Stack and Archetype), Skills (Procedures), and Lessons waiting to be promoted. The vocabulary is in [`CONTEXT.md`](CONTEXT.md); the list of Guides is in [`MAP.md`](MAP.md).
+The shared approach behind my projects: Guides (Conventions and Stances per Stack and Archetype), Skills (Procedures), and Lessons waiting to be promoted. Its point is to define how projects are worked on, well enough that agents can act on their own: the instructions and the harness are meant to be sufficient, and where an agent has to stop and ask, that is a gap in them to fix, not a gate to keep. The vocabulary is in [`CONTEXT.md`](CONTEXT.md); the list of Guides is in [`MAP.md`](MAP.md).
 
 ## How the repos fit together
 
