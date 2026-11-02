@@ -25,7 +25,7 @@ At the end of the session, run a Lesson pass (Global Guide, *Lessons*): did anyt
 
 ## The layers
 
-What the layers are, and why there is no decision-record layer and system design justifies itself, is the **Project knowledge Guide** (`~/.claude/commons/guides/project-knowledge.md`, Imported into every session). This skill is the Procedure that writes them; where they seem to disagree, the Guide wins. Formats: [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) for `CONTEXT.md`, [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md) for system design.
+What the layers are, and why there is no decision-record layer and system design justifies itself, is the **Project knowledge Guide** (`~/.claude/commons/guides/project-knowledge.md`, Imported into every session); how to apply each of its Stances is a detail file under `~/.claude/commons/guides/project-knowledge/`, linked below where a step applies it. This skill is the Procedure that writes them; where they seem to disagree, the Guide wins. Formats: [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) for `CONTEXT.md`, [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md) for system design.
 
 ## Working at one layer at a time
 
@@ -75,7 +75,7 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 │       └── CONTEXT.md
 ```
 
-Create files and directories lazily — only when you have something to write. Match the project's existing naming and structure; don't invent a parallel layout beside one that already exists.
+When to create files, and conforming to the existing layout, is the Project knowledge Guide's [three layers](~/.claude/commons/guides/project-knowledge/three-layers.md): don't invent a parallel layout beside one that already exists.
 
 ## During the session
 
@@ -97,7 +97,7 @@ The project's Archetype Guide (e.g. for discrete event simulation), where there 
 
 ### Challenge against the end state
 
-The design states its end state as hypotheses (the Project knowledge Guide's Stance; format in [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md)). Start from the register's Due rows, not from the last result. Then, as the session goes:
+The design states its end state as hypotheses (the Project knowledge Guide's Stance, applied in [end state](~/.claude/commons/guides/project-knowledge/end-state.md); format in [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md)). Start from the register's Due rows, not from the last result. Then, as the session goes:
 
 - A new mechanism: "Which part of the end state does this serve?" One that serves none is there for a local reason.
 - A new hypothesis: what's its source, its test, its reading rule (supported, refuted, undecided, with the error) and its review interval? One with no source is a candidate to drop.
@@ -121,6 +121,6 @@ When something is resolved, update the appropriate layer immediately — don't b
 
 ### Write system design self-justifying
 
-Most resolutions land in the system-design layer. Write them as the Guide's Stance *system design justifies itself* says, in the present tense, using [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md). Domain claims go in only once grounded in sources (the Guide's *domain claims come from sources, not recall*).
+Most resolutions land in the system-design layer. Write them as the Guide's Stance *system design justifies itself* says ([system design](~/.claude/commons/guides/project-knowledge/system-design.md)), in the present tense, using [SYSTEM-DESIGN-FORMAT.md](./SYSTEM-DESIGN-FORMAT.md). Domain claims go in only once grounded in sources (the Guide's *domain claims come from sources, not recall*: [domain claims](~/.claude/commons/guides/project-knowledge/domain-claims.md), and [research](~/.claude/commons/guides/project-knowledge/research.md) before briefing it).
 
 </supporting-info>

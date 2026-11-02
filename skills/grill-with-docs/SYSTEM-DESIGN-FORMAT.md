@@ -22,6 +22,8 @@ The test: a newcomer reading only this doc understands both what the design is a
 
 ## Describe the destination, not the journey
 
+The rules are the Project knowledge Guide's [system design](~/.claude/commons/guides/project-knowledge/system-design.md) and [no decision records](~/.claude/commons/guides/project-knowledge/no-decision-records.md); in a doc they look like this:
+
 - **No chronology.** Don't record how the design evolved, which mechanism superseded which, or what the previous iteration was. Describe the current design as if it had always been this way.
 - **No "considered options" log.** The reasoning for the chosen design (including why alternatives fail) belongs woven into the prose as present-tense justification — not as a separate list of rejected candidates with verdicts.
 - **No decision metadata.** No status fields, dates, supersession links, or "we decided" framing. The doc is a description of the system, not a record of a meeting. A hypothesis's status is in the register, never here.
@@ -36,17 +38,15 @@ When the design changes, change the doc to describe the new present and delete t
 
 ## The end state and its hypotheses
 
-The Project knowledge Guide's Stance *the system design states its end state as hypotheses* says what this section is for; the terms are in the Commons' `CONTEXT.md` (*End states and hypotheses*). Its shape:
+The Project knowledge Guide's Stance *the system design states its end state as hypotheses* says what this section is for, and its [end state](~/.claude/commons/guides/project-knowledge/end-state.md) how hypotheses and their reading rules are written, read and revised; the terms are in the Commons' `CONTEXT.md` (*End states and hypotheses*). Its shape:
 
 - **The end state as a tree of parts**, from the system's purpose at the top down to the mechanisms that realise each part. Where the design already maps phenomena or features to mechanisms (a coverage map), that map is the tree.
 - **Under each part, its hypotheses**, in the present tense. Where the domain is sourced, each is a domain phenomenon the model should reproduce.
-- **Beside each hypothesis, its reading rule**: the test that reads it, the panel or size (or stopping rule), what counts as supported, refuted and undecided, and how the instrument's error is treated. Where the domain gives an empirical range, the rule cites it rather than restating the number. Plus the review interval, and which mechanisms make it Due when they change.
+- **Beside each hypothesis, its reading rule**: the test that reads it, the panel or size (or stopping rule), what counts as supported, refuted and undecided, and how the instrument's error is treated. Plus the review interval, and which mechanisms make it Due when they change.
 - **Nothing about status.** No "holds", "failed", "the null", last readings or dates: those are the register's.
 
-A refuted hypothesis changes this section, in the same change that records the reading in the register. A declared value that changes on its own is Drift.
+A refuted hypothesis changes this section, in the same change that records the reading in the register.
 
 ## A note on parameter values
 
-Specific numeric values that calibrate the mechanisms are an implementation concern — they live with the code (and any parameter-search tooling), not in the system-design layer. The design layer describes the *form* of a cost or flow and why it has that form; the values that make it concrete are found and tuned downstream.
-
-A reading rule's declared values (its range, panel size, threshold, review interval) are not calibration: they say what would count as the end state being reached or missed, so they are design, and they live with the rule.
+Where parameter values and a reading rule's declared values live is in [system design](~/.claude/commons/guides/project-knowledge/system-design.md). The design layer describes the *form* of a cost or flow and why it has that form; the values that make it concrete are found and tuned downstream.

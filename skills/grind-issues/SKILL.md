@@ -7,7 +7,7 @@ description: Work through the open `ready` GitHub issues (or a given list) using
 
 Work through the current repo's open `ready` issues (or the issues the user names). Each issue is implemented by its own **sub-agent**, so context stays clean between issues. Issues that don't depend on each other run in parallel; the orchestrator (you) assesses, plans the order and merges.
 
-How agents branch, catch up with `main`, resolve conflicts and work in parallel is the **Agentic development Guide** (`~/.claude/commons/guides/agentic-development.md`, Imported into every session). This skill applies it; where they seem to disagree, the Guide wins.
+How agents branch, catch up with `main`, resolve conflicts and work in parallel is the **Agentic development Guide** (`~/.claude/commons/guides/agentic-development.md`, Imported into every session). Its Conventions live in detail files under `~/.claude/commons/guides/agentic-development/`, and each step below links the one it applies rather than restating it. This skill applies it; where they seem to disagree, the Guide wins.
 
 ## Startup
 
@@ -49,8 +49,8 @@ If a test command must start in a package's directory (`flutter test`, `dart tes
 Read every issue on the worklist, then decide which can run together:
 
 - **Sequence an issue after another** when its design depends on the other's outcome: it says it's blocked by it, extends what the other introduces, or would be designed differently once the other lands.
-- **Otherwise run it in parallel.** Touching the same files (lock files, a shared results document, a CLI entry point) is not a reason to sequence: the later PR merges `main` in and resolves, as the Guide says. The exception is files that can only be generated again, not merged (recorded model runs, under the Model calls Guide): issues that regenerate the same ones run in sequence.
-- **Cap how many run at once** by what the machine can hold: each worktree builds its own environment, and the full test run's duration from Test Discovery is a guide to how heavy each agent is. The per-agent parallelism cap in the brief doesn't limit how many agents' full checks overlap, so a heavy full check means fewer agents. When unsure, start with two or three.
+- **Otherwise run it in parallel**, even when issues touch the same files, except where the Agentic development Guide's [agents in parallel](~/.claude/commons/guides/agentic-development/agents-in-parallel.md) (*slices that touch the same files*) says to sequence: issues that regenerate the same recorded model runs.
+- **Cap how many run at once** by what the full check costs, as [agents in parallel](~/.claude/commons/guides/agentic-development/agents-in-parallel.md) (*each worktree builds its own environment*) says: the full test run's duration from Test Discovery is the guide to how heavy each agent is. When unsure, start with two or three.
 
 Tell the user the plan in a line or two (what runs first, what waits for what). Within those constraints, start issues in worklist order — ID order, unless the user reordered them or supplied their own list. One issue at a time is still a valid plan when everything depends on everything.
 
@@ -66,9 +66,9 @@ Mark this issue's task `in_progress` via `TaskUpdate`. Then read the issue body 
 - **Already done**: the feature/fix already exists in the codebase. → Close with a comment explaining why, mark the task `completed`, move to next issue.
 - **Unclear**: not enough detail to implement. → Post a comment saying what design is missing; move the issue from `ready` to `needs-design`; mark the task `completed` (it's been processed), move to next issue. Issues sequenced after it may need re-planning.
 
-**If the Adopter keeps a register** (the Project knowledge Guide's end-state Stance), list the hypotheses an actionable issue will make Due: those whose Due mechanisms it touches, by the design's own rule. Split them by cost. **Cheap** ones are read by the full test command (the one run before committing). **Expensive** ones need anything beyond it: slow lanes, multi-seed instruments. The cheap ones go into the sub-agent's brief; the expensive ones are for the completion report. Nobody in the run defers or reads an expensive one: whether to read it now, defer it or revise the design is the owner's review, because a change deciding to defer the readings it made Due is the decision most open to Drift.
+**If the Adopter keeps a register** (the Project knowledge Guide's end-state Stance; the review before a change is the Agentic development Guide's [Due hypotheses](~/.claude/commons/guides/agentic-development/due-hypotheses.md)), list the hypotheses an actionable issue will make Due: those whose Due mechanisms it touches, by the design's own rule. Split them by cost. **Cheap** ones are read by the full test command (the one run before committing). **Expensive** ones need anything beyond it: slow lanes, multi-seed instruments. The cheap ones go into the sub-agent's brief; the expensive ones are for the completion report. Nobody in the run defers or reads an expensive one: whether to read it now, defer it or revise the design is the owner's review, because a change deciding to defer the readings it made Due is the decision most open to Drift.
 
-**If the issue re-records model runs** (the Model calls Guide), its brief carries a budget: which recordings, the retries per fixture, the rule for telling flake from regression, and the most it may spend. A run on an expensive model needs the owner's say before it is briefed, and the brief carries it with its cap: relayed to an agent mid-run, it isn't the owner's consent (the Guide, *Agents in parallel*), so a need that appears mid-run is a run the orchestrator makes itself. An issue whose criterion is to re-record "once the instructions settle" is **Unclear**: it needs splitting into a slice the owner accepts the behaviour of and a slice that records, as that Guide says.
+**If the issue re-records model runs** (the Model calls Guide), read its [changing an act](~/.claude/commons/guides/model-calls/changing-an-act.md) before briefing: it says what the brief's budget holds, which runs need the owner's say up front, and which re-recording criteria aren't ready (such an issue is **Unclear**, above). A run the owner has said yes to goes into the brief with its cap, and one needed mid-run is a run the orchestrator makes itself ([agents in parallel](~/.claude/commons/guides/agentic-development/agents-in-parallel.md), *an act gated on the owner's say*). The brief names the Model calls detail files for the sub-agent to read.
 
 ### Step 2 — Delegate to sub-agent
 
@@ -107,24 +107,31 @@ which in your report.]
 Cheap, read by the full test command: [LIST, or "none"]. When they
 pass, update their register rows (status, reading, this commit) in the
 PR. If one fails under its reading rule, don't change the rule or the
-test to make it pass: report it.
+test to make it pass: report it. How a hypothesis is read:
+~/.claude/commons/guides/project-knowledge/end-state.md.
 Expensive: [LIST, or "none"]. Don't run them and don't defer them; the
 orchestrator reports them for the owner's review.]
 
 [IF THE ISSUE RE-RECORDS MODEL RUNS:
 ## Re-recording budget
 
+Before recording anything, read the Model calls Guide's
+~/.claude/commons/guides/model-calls/changing-an-act.md, and
+~/.claude/commons/guides/model-calls/samples.md for how to read a
+re-recording's failures.
+
 Recordings: [WHICH]. Retries per fixture: [N]. Spend at most [AMOUNT].
-The same fixture failing the same check on every try is a regression:
-stop and report it, don't change the check. Different fixtures failing
-on different tries is flake: retry within the budget. Record nothing
+Only flake (samples.md) is retried, within the budget; a regression or
+a slip stops the run: report it, don't change the check. Record nothing
 outside the list, and no run on [EXPENSIVE MODELS] [OR: The owner has
 said yes to [RUN] on [MODEL], up to [CAP].]]
 
 ## How to work
 
 You are in your own git worktree. Follow the Agentic development Guide
-(~/.claude/commons/guides/agentic-development.md): in particular, catch
+(~/.claude/commons/guides/agentic-development.md), and before you push
+read its ~/.claude/commons/guides/agentic-development/catching-up-with-main.md.
+In particular, catch
 up with main by merging it, never rebasing; resolve conflicts hunk by
 hunk, and after resolving one in prose, check that `git diff origin/main
 -- <file>` removes or changes none of main's headings; and before
@@ -146,9 +153,12 @@ parameter.]
 
 ## Your task
 
-Implement this issue using strict TDD by invoking the `/tdd` skill.
+Implement this issue using strict TDD by invoking the `/tdd` skill
+(the Guide's test-first Stance:
+~/.claude/commons/guides/agentic-development/test-first.md).
 You are running unattended, with no user to answer questions: apply
-the Guide's Stance "decide, record, carry on".
+the Guide's Stance "decide, record, carry on"
+(~/.claude/commons/guides/agentic-development/decide-record-carry-on.md).
 
 1. Read the codebase. Use the project's CONTEXT.md for domain
    vocabulary and docs/system-design/ for the design and the reasons
@@ -209,26 +219,17 @@ the Guide's Stance "decide, record, carry on".
 
 ### Step 3 — Merge (orchestrator)
 
-Merge PRs **one at a time**, as their sub-agents finish, under the Agentic development Guide's PR workflow (which says when a PR may merge without asking).
+Merge PRs **one at a time**, as their sub-agents finish, as the Agentic development Guide's [merging](~/.claude/commons/guides/agentic-development/merging.md) says (when a PR may merge without asking, and the commands). Run each command as its own call, from the primary checkout.
 
-```bash
-gh pr checks <PR-NUMBER> --watch
-gh pr merge <PR-NUMBER> --squash --delete-branch
-git switch main
-git pull
-```
-
-Run each as its own call, from the primary checkout. Never merge with failing or pending checks.
-
-Then clean up after the agent (the Agentic development Guide, *Agents in parallel*): remove its worktree and delete the branches left for it, the harness's and the work branch, once the merge has landed. Do the same for an issue whose agent stopped without a PR, once its work is abandoned or saved elsewhere.
+Then clean up after the agent ([agents in parallel](~/.claude/commons/guides/agentic-development/agents-in-parallel.md), *whoever launched an agent removes its worktree and branches*): remove its worktree and delete the branches left for it, the harness's and the work branch, once the merge has landed. Do the same for an issue whose agent stopped without a PR, once its work is abandoned or saved elsewhere.
 
 **Before touching a PR, make sure its sub-agent has really finished** (see the Agentic development Guide's trap on delegated agents outliving their hand-back): you've had its completion notification, `gh pr list --head <branch>` shows only the one PR, nothing it started is still running, and the branch head hasn't moved since it reported. This wait is per PR: meanwhile, carry on assessing, launching and merging other issues.
 
 **Check the PR's closing references** before merging (see the Guide's trap on closing keywords): `gh pr view <PR-NUMBER> --json closingIssuesReferences --jq '[.closingIssuesReferences[].number]'` should list only the issue being worked. If it lists others, edit the PR body (`gh pr edit <PR-NUMBER> --body-file <file>`) to reword them before merging.
 
-After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as the Guide says, then merge once it's green.
+After each merge, other open PRs from this run may be behind `main`. When you come to merge one, if it's behind, run `gh pr update-branch <PR-NUMBER>` and wait for checks again. If that fails on a conflict, send the PR back to its sub-agent (`SendMessage` to its name) to merge `main` in and resolve as [catching up with `main`](~/.claude/commons/guides/agentic-development/catching-up-with-main.md) says, then merge once it's green.
 
-**A PR that comes back needing more goes back only for a fix to what its issue asked** (the Agentic development Guide, *a PR holds the change its slice asked for*). Anything further, merge what is sound and open a new issue for the rest; don't grow the PR by sending it back.
+**A PR that comes back needing more goes back only for a fix to what its issue asked** ([agents in parallel](~/.claude/commons/guides/agentic-development/agents-in-parallel.md), *a PR holds the change its slice asked for*). Anything further, merge what is sound and open a new issue for the rest; don't grow the PR by sending it back.
 
 **Open the follow-up issues sub-agents drafted** (`followups-[NUMBER].md`), after checking that each isn't a duplicate of an open issue.
 
