@@ -48,7 +48,7 @@ Read every issue on the worklist, then decide which can run together:
 
 - **Sequence an issue after another** when its design depends on the other's outcome: it says it's blocked by it, extends what the other introduces, or would be designed differently once the other lands.
 - **Otherwise run it in parallel.** Touching the same files (lock files, a shared results document, a CLI entry point) is not a reason to sequence: the later PR merges `main` in and resolves, as the Guide says. The exception is files that can only be generated again, not merged (recorded model runs, under the Model calls Guide): issues that regenerate the same ones run in sequence.
-- **Cap how many run at once** by what the machine can hold: each worktree builds its own environment, and the full test run's duration from Test Discovery is a guide to how heavy each agent is. When unsure, start with two or three.
+- **Cap how many run at once** by what the machine can hold: each worktree builds its own environment, and the full test run's duration from Test Discovery is a guide to how heavy each agent is. The per-agent parallelism cap in the brief doesn't limit how many agents' full checks overlap, so a heavy full check means fewer agents. When unsure, start with two or three.
 
 Tell the user the plan in a line or two (what runs first, what waits for what). Within those constraints, start issues in worklist order — ID order, unless the user reordered them or supplied their own list. One issue at a time is still a valid plan when everything depends on everything.
 
@@ -66,7 +66,7 @@ Mark this issue's task `in_progress` via `TaskUpdate`. Then read the issue body 
 
 **If the Adopter keeps a register** (the Project knowledge Guide's end-state Stance), list the hypotheses an actionable issue will make Due: those whose Due mechanisms it touches, by the design's own rule. Split them by cost. **Cheap** ones are read by the full test command (the one run before committing). **Expensive** ones need anything beyond it: slow lanes, multi-seed instruments. The cheap ones go into the sub-agent's brief; the expensive ones are for the completion report. Nobody in the run defers or reads an expensive one: whether to read it now, defer it or revise the design is the owner's review, because a change deciding to defer the readings it made Due is the decision most open to Drift.
 
-**If the issue re-records model runs** (the Model calls Guide), its brief carries a budget: which recordings, the retries per fixture, the rule for telling flake from regression, and the most it may spend. A run on an expensive model needs the owner's say before it is briefed. An issue whose criterion is to re-record "once the instructions settle" is **Unclear**: it needs splitting into a slice the owner accepts the behaviour of and a slice that records, as that Guide says.
+**If the issue re-records model runs** (the Model calls Guide), its brief carries a budget: which recordings, the retries per fixture, the rule for telling flake from regression, and the most it may spend. A run on an expensive model needs the owner's say before it is briefed, and the brief carries it with its cap: relayed to an agent mid-run, it isn't the owner's consent (the Guide, *Agents in parallel*), so a need that appears mid-run is a run the orchestrator makes itself. An issue whose criterion is to re-record "once the instructions settle" is **Unclear**: it needs splitting into a slice the owner accepts the behaviour of and a slice that records, as that Guide says.
 
 ### Step 2 — Delegate to sub-agent
 
@@ -90,7 +90,10 @@ hangs or runs away: if a run is well past the baseline and no longer
 compiling, find which test is still running, stop it, and report that
 test to the orchestrator instead of waiting it out or retrying.
 [IF PARALLEL: Other agents are running at the same time; cap build and
-test parallelism to [LIMIT].]
+test parallelism to [LIMIT]. A timeout whose running test had started
+only seconds before is load from the other agents, not a hang: re-run
+that package alone with a longer timeout, or leave it to CI, and say
+which in your report.]
 
 ## Issue description
 
@@ -113,7 +116,8 @@ Recordings: [WHICH]. Retries per fixture: [N]. Spend at most [AMOUNT].
 The same fixture failing the same check on every try is a regression:
 stop and report it, don't change the check. Different fixtures failing
 on different tries is flake: retry within the budget. Record nothing
-outside the list, and no run on [EXPENSIVE MODELS].]
+outside the list, and no run on [EXPENSIVE MODELS] [OR: The owner has
+said yes to [RUN] on [MODEL], up to [CAP].]]
 
 ## How to work
 
