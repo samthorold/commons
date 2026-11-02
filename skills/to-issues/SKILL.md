@@ -29,6 +29,7 @@ Each slice is `ready` (can be implemented and merged with no further design) or 
 - Each slice delivers a narrow but COMPLETE path through every layer (schema, API, UI, tests)
 - A completed slice is demoable or verifiable on its own
 - Prefer many thin slices over few thick ones
+- A plan that moves readers from one relation to another behind an interim bridge (the old relation kept filled until every reader has moved) lists every reader of the old relation, found by searching the code, not from the plan. The slice that removes the bridge is blocked by a slice for each reader: while the bridge stands, a forgotten reader keeps passing its tests, and breaks silently when it goes.
 </vertical-slice-rules>
 
 ### 4. Present the breakdown
