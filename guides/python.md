@@ -4,16 +4,12 @@
 
 The default setup for every Python project. When starting or touching a Python repo, bring it in line with this, and record the project's own specifics (commands, check names, versions, traps) in that repo's `CLAUDE.md`. Reference implementations: `~/Projects/py-ev` (single Python version) and `~/Projects/superenums` (Python version matrix, multiple type checkers). Copy files from them rather than rewriting from memory. Changes to this Guide are Revisions of the Commons: see the commons `README.md`.
 
+Conventions used for one job live in files under `~/.claude/commons/guides/python/`, and each section says when to read its file. Links are relative to this file.
+
 ## Tooling
 
-- **uv for everything**: environments, dependencies, running tools (`uv run ...`, `uv add --dev ...`). No bare `pip`, no globally installed tools. src layout, `uv_build` backend.
-- **uv itself is pinned** with `[tool.uv] required-version = "==X.Y.Z"` in `pyproject.toml`, and the `[build-system]` bound matches it (`uv_build>=X.Y.Z,<X.(Y+1)`). setup-uv reads the pin in CI; without it, CI silently uses the latest uv and drifts from local. Upgrade uv deliberately in one PR (pin, build bound, `uv lock`). Locally, uv comes from the standalone installer (`~/.local/bin`), so `uv self update <version>` works.
-- **Dev dependencies pinned exactly** (`==`), so `uv.lock`, pre-commit and CI run identical versions.
-- **ruff** for lint and format. Rule set: `E, W, F, I, B, UP, SIM, RUF`, `target-version` = the minimum Python. If ruff should skip some paths (`extend-exclude`), also set `force-exclude = true`, because pre-commit passes files explicitly and ruff ignores excludes for explicit files otherwise.
-- **Type checking**: ty at least. Add pyright and/or mypy (strict) where typing is part of the product. Put pyright config in `pyrightconfig.json`, not `[tool.pyright]`: a `pyrightconfig.json` in a parent directory (e.g. `~`) wins over a pyproject section.
-- **pytest**, with doctests where the project has them.
-- **Version**: single source in `pyproject.toml`. The package's `__version__ = importlib.metadata.version("<dist-name>")`, with a test that it matches `pyproject.toml`.
-- **Taskfile.yml** ([Task](https://taskfile.dev)) for common commands: `test`, `lint`, `fmt`, plus project-specific ones, and `version` / `bump` (`uv version --bump {{.CLI_ARGS}}`). Without `task` installed: `uvx --from go-task-bin task <name>`.
+Decides the tools and how they are pinned: uv (itself pinned), ruff, the type checkers, pytest, the version's single source, the Taskfile.
+Before setting up a Python repo, or changing its dependencies, build backend, uv version or tool config, read [tooling](python/tooling.md).
 
 ## Testing
 
@@ -24,40 +20,21 @@ How Python Adopters carry out the Agentic development Guide's test-first Stance 
 - **A callable that crosses a process pool lives in the package**, not in the test module. Under the `spawn` start method (the default on macOS and Windows) workers re-import it by module path, and `tests` isn't importable from them, so a fake defined in a test fails with `ModuleNotFoundError: tests`. Pass a real callable from the package, keep pool-crossing fakes in a small helper module in the package, or test with one worker and cover parallel = serial with a package callable.
 - **Randomness is a parameter**: code takes a `random.Random` (or a seed) instead of using the module-level `random`, so a test passes a seeded instance and the run is reproducible.
 
-## pre-commit
+## pre-commit and CI
 
-- `uv run pre-commit install` once per clone. `uv run pre-commit run --all-files` is exactly what CI runs.
-- pre-commit itself is a dev dependency. Beyond the Global Guide's hooks (plus `debug-statements`), local hooks run through `uv run --locked` (so they use `uv.lock`'s versions, and fail if it's stale): ruff check `--fix`, ruff format, the type checker(s), actionlint, shellcheck, and the tests (`pass_filenames: false`).
-- actionlint and shellcheck come from PyPI as dev dependencies (`actionlint-py`, `shellcheck-py`), not system installs.
-
-## CI (GitHub Actions)
-
-The shape is the Global Guide's *Checks and CI*; the Python steps are:
-
-- The `pre-commit` job runs `uv sync --locked` then `uv run --locked pre-commit run --all-files --show-diff-on-failure`, after `astral-sh/setup-uv` with `enable-cache: true`. The `push` to `main` paths are `[uv.lock]`.
-- Several Python versions: a matrix, job named `pre-commit (${{ matrix.python-version }})`, with `env: UV_PYTHON: ${{ matrix.python-version }}` so every `uv` call, including the hooks', uses it. One version: no matrix.
+Decides the Python hooks (run through `uv run --locked`) and the steps of the `pre-commit` CI job, with its Python version matrix.
+On a fresh clone, or before setting up or changing a repo's hooks or CI workflow, read [pre-commit and CI](python/checks.md).
 
 ## Releases
 
-- `release.yml` + `.github/scripts/release-check.sh` (copy from py-ev): on every push to `main`, if `v<version>` isn't tagged, build, tag and publish a GitHub Release with the distributions and generated notes; on PRs a dry run, failing if the PR changes the version to one already tagged.
-- **Feature PRs never change the version.** A release is its own PR that only bumps it (`task bump -- patch|minor|major`). Never tag by hand. Hotfixes fix forward (fix, then a patch-bump PR).
-- **The version-bump PR is the one that publishes a release when merged.** Whether and how it merges is the Agentic development Guide's PR workflow.
-- A tag created by `GITHUB_TOKEN` triggers no other workflows, so release work belongs in `release.yml` itself.
+Decides how a release is cut: its own version-bump PR, published by `release.yml` when merged; feature PRs never change the version, and nobody tags by hand.
+Before cutting a release, touching the version, or changing `release.yml`, read [releases](python/releases.md).
 
 ## Rust extensions
 
-When part of a project needs compiled speed, it becomes a Rust extension in the same repo, with Python orchestrating. Reference implementation: `~/Projects/py-minimax-games` (`rust/`, `minimax_games._native`). Copy from it. The crate follows the Rust Guide; this section adds only what the Python+Rust cell needs.
-
-- **One crate, `rust/`, in maturin's mixed layout**: `[tool.maturin]` with `manifest-path = "rust/Cargo.toml"`, `module-name = "<pkg>._native"`, `python-source = "src"`. The Python package stays at `src/<pkg>/`. Make it a Cargo workspace only when a second engine arrives.
-- **maturin replaces `uv_build`** (`requires = ["maturin>=X.Y,<X.(Y+1)"]`). PyO3 behind a `python` cargo feature (enabled by `[tool.maturin] features`), so plain `cargo test` needs no Python. Build for the stable ABI from the minimum Python (`abi3-py3XX`), so one wheel per platform serves every version.
-- **`[tool.uv] cache-keys`** must list `pyproject.toml`, `rust/Cargo.toml`, `rust/Cargo.lock` and `rust/src/**/*.rs`, or `uv run` keeps a stale extension after Rust changes.
-- **The Rust Guide's `rust-toolchain.toml` sits at the repo root**, not in `rust/`: rustup finds it from the working directory, and cargo, maturin and the hooks run from the root. Include it in the sdist (`[tool.maturin] include`).
-- **Type stubs** for the extension in `src/<pkg>/_native/*.pyi`, with no `__init__.py`, so the compiled module wins at import time.
-- **pre-commit**: the Rust Guide's cargo hooks with `--manifest-path rust/Cargo.toml` and `files: ^(rust/|rust-toolchain\.toml$)`, clippy run through `uv run --locked` so PyO3's build script finds the venv's Python. pytest also runs on Rust and TOML changes.
-- **CI**: the Rust Guide's toolchain and cache steps (`workspaces: rust`) before `uv sync --locked`, and its `push` paths under `rust/`.
-- **Releases**: `release.yml` runs `uv build` on the platform that needs a wheel (e.g. `macos-15` for Apple silicon), giving the sdist plus that wheel; the dry run builds on every PR.
-- **The Python implementation stays the reference**: differential tests compare the Rust and Python results after every step on seeded inputs, and bit-identical randomness (port CPython's MT19937 and the `random` methods used) makes them exact.
+Decides how a Rust extension sits in a Python repo (maturin's mixed layout under `rust/`, stubs, hooks, CI, wheels) and how it is tested against the Python reference.
+Before adding a Rust extension to a Python project, or changing its build, hooks, CI, release or differential tests, read [Rust extensions](python/rust-extensions.md).
 
 ## Lessons
 
-If something in this Guide proves wrong or incomplete while you work (a Contradiction, a Deviation, a Gap or a Trap that another Python project would also hit), record a Lesson addressed to this Guide, as described in `~/.claude/commons/lessons/README.md`. Trouble specific to one project stays in that project's own docs.
+If something in this Guide proves wrong or incomplete while you work (a Contradiction, a Deviation, a Gap or a Trap that another Python project would also hit), record a Lesson addressed to this Guide (to the section's detail file, where the Lesson is about one job), as described in `~/.claude/commons/lessons/README.md`. Trouble specific to one project stays in that project's own docs.

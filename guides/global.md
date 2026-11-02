@@ -2,23 +2,16 @@
 
 **Scope:** every Stack, every Archetype.
 
+Conventions used only when setting up a repo or changing its settings, CI or hooks live in their own files under `~/.claude/commons/guides/global/`, and each section says when to read its file. Links are relative to this file.
+
 ## GitHub repo settings and branch protection
 
-- Merge settings: squash merge only (no merge commits, no rebase), delete branch on merge.
-- **The squash commit is the PR's title and body** (`squash_merge_commit_title: PR_TITLE`, `squash_merge_commit_message: PR_BODY`). *Why:* the PR body is where a change's reasons are recorded (see the Agentic development Guide's *decide, record, carry on*), and only what lands in the commit reaches `git log` and `git blame`, which outlive the forge.
-- A `main` **ruleset** (Settings → Rules, or `gh api -X POST repos/<owner>/<repo>/rulesets --input ruleset.json`): block deletion and non-fast-forward; require a PR with 0 approvals and `allowed_merge_methods: ["squash"]`; required status checks = the CI job names (`integration_id` 15368, GitHub Actions) with `strict_required_status_checks_policy: true` (branch must be up to date); no bypass actors. Copy py-ev's with `gh api repos/samthorold/py-ev/rulesets/<id>`.
-- Create the ruleset only after CI has reported under the exact job names, and record the required check names in the repo's `CLAUDE.md`: renaming the job or changing the matrix breaks merging until the ruleset is updated.
-- **A private repo on a free plan gets no ruleset.** GitHub refuses rulesets and classic branch protection there (403, "Upgrade to GitHub Pro or make this repository public"). The merge settings still apply, and the checks are held only by the merge rule (Agentic development Guide: merge only on green). The repo's `CLAUDE.md` records this as a Deviation, with the job names a ruleset would require.
+- **When creating a GitHub repo, or changing its merge settings, its `main` ruleset or its CI job names, read [repo settings](global/repo-settings.md).** It decides squash-only merges whose commit is the PR's title and body, and a `main` ruleset requiring the CI job names (none on a free private repo, recorded as a Deviation).
 
 ## Checks and CI
 
-- **A repo's checks are its pre-commit hooks, and CI runs exactly them.** `ci.yml` has one job, named `pre-commit` (with a version matrix, `pre-commit (<version>)`), that runs `pre-commit run --all-files --show-diff-on-failure`. *Why:* what passes locally passes in CI, and one job name keeps every repo's required checks the same. The Stack's Guide says how pre-commit and the tools are installed and pinned, and which hooks it adds.
-- Every repo's hooks include `pre-commit/pre-commit-hooks` (trailing-whitespace, end-of-file-fixer, check-yaml, check-toml, check-json, check-added-large-files), actionlint on workflows and shellcheck on shell scripts, all at pinned versions. actionlint also shellchecks workflows' `run:` steps, but only when a `shellcheck` is on its own PATH, and a separate shellcheck hook doesn't put one there. The Stack's Guide says how its actionlint gets one. *Why:* GitHub's runners have shellcheck installed, so without it locally a step passes locally and fails in CI.
-- **Where no Stack's Guide applies** (no Stack, or a Stack without a Guide): pre-commit runs as `uvx pre-commit@<exact version>`, locally and in CI after `astral-sh/setup-uv`; that version is the pin, so `CLAUDE.md` and `ci.yml` change it together. This Guide's hooks come from their remote hook repos pinned by `rev` (there is no lock file for local hooks to run from), and the `actionlint` hook gets `additional_dependencies: [shellcheck-py==<version>]`, which puts a shellcheck on its PATH. The Stack's own tools may run as `language: system` hooks, on the toolchain the repo pins.
+- **When setting up a repo's checks or CI, or changing its pre-commit hooks or workflows, read [checks and CI](global/checks-and-ci.md).** It decides that the checks are the pre-commit hooks, which ones every repo has, and that CI is one `pre-commit` job running exactly them; the Stack's Guide completes it.
 - **Files a program writes and checks back are written as the hooks would leave them** (recorded fixtures, generated files: ending in a newline, no trailing whitespace). *Why:* otherwise a hook rewrites the file on commit, and anything that hashes it, compares it byte for byte or checks it is unchanged breaks. Fix the writer; excluding the files from the hooks is the fallback.
-- Triggers: every `pull_request`, and `push` to `main` only on the paths of lock files and toolchain pins. PRs must be up to date and green before merge, so re-running on `main` only matters for warming the caches PRs restore from.
-- `permissions: contents: read`, and a `concurrency` group cancelling superseded runs.
-- **Pin actions to exact versions** (`astral-sh/setup-uv@v10.3.0`): some, like setup-uv, publish no floating major tags, and an exact pin changes only in a PR.
 
 ## Issues
 

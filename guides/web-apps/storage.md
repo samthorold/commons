@@ -1,0 +1,7 @@
+# Web apps Guide: storage
+
+The Conventions for a web app's store, from [the Web apps Guide](../web-apps.md#storage), which says when to read them.
+
+- **SQLite until something needs Postgres**: concurrent writers, an extension (e.g. pgvector), or several app instances. Then Postgres, run locally by docker-compose (*twelve-factor*, in [its detail file](twelve-factor.md)).
+- **SQLite migrations can rebuild a table.** SQLite can't change a constraint (a `CHECK`) in place, so the change is a rebuild by SQLite's own procedure (https://www.sqlite.org/lang_altertable.html, *Making other kinds of table schema changes*): create `new_X`, copy, drop `X`, rename `new_X` to `X`, then `PRAGMA foreign_key_check` before committing. The migration runner makes that possible: each migration runs on one connection with `PRAGMA foreign_keys = OFF` set before its transaction begins (inside one the pragma does nothing). *Why:* with foreign keys on, dropping a table others refer to fails. And renaming the *old* table first, the order that looks natural, rewrites other tables' references to point at the temporary name. A runner that pools connections or opens each migration's transaction itself can't do this, and that is found only on the first `CHECK` that changes.
+- **Tests run against the real store while it's cheap**: a SQLite file in a temporary directory. When the store needs a container, the repository ports earn an **in-memory adapter** for unit tests, and integration tests drive the app against the real database, each test in a rolled-back transaction.
