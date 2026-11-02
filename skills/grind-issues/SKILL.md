@@ -42,6 +42,8 @@ Before delegating any issues, find out how the project runs its tests. Its `CLAU
 
 Include these in every sub-agent prompt under a `## How to run tests` header.
 
+If a test command must start in a package's directory (`flutter test`, `dart test`, many JS runners), hand the agents a way to run it: a worktree agent can't `cd` (it doesn't carry between its shell calls, `cd <dir> && …` is refused as compound, and the Bash tool has no working-directory parameter). Use the repo's own test script if it takes a package path; otherwise a small wrapper script, run by absolute path, that does `cd "$1"; shift; exec "$@"`. Name it in the brief, or each agent improvises its own.
+
 ## Planning the order (once, before the loop)
 
 Read every issue on the worklist, then decide which can run together:
@@ -137,7 +139,10 @@ Run one shell command per call: no `cd <dir> && …`, chains, pipes into
 an interpreter or heredocs. In a worktree a compound command is refused
 whole, and nothing in it runs, even if the refusal reads as though the
 first steps did. Write and change files with the Write and Edit tools,
-and run scripts by absolute path.
+and run scripts by absolute path. [IF A COMMAND MUST START IN A PACKAGE
+DIRECTORY: run it as `[WRAPPER] <package dir> <command>`; `cd` doesn't
+carry between calls, and the Bash tool has no working-directory
+parameter.]
 
 ## Your task
 
